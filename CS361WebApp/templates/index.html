@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CS 361 Web App</title>
+</head>
+<body>
+<table>
+    {% for i in myObjects %}
+        <tr><td>{{ i.fieldOne }}</td><td>{{ i.fieldTwo }}</td><td>{{ i.color }}</td></tr>
+    {% endfor %}
+</table>
+</body>
+</html>
