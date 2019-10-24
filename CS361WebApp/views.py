@@ -1,11 +1,15 @@
 from django.shortcuts import render
-
+from django.views import View
+from .models import Thingy
 # Create your views here.
-from django.shortcuts import render
-from django.http import HttpResponse
-from .models import MyModel
-
-def index(request):
-    myQuery = MyModel.objects.all()
-    context = {'myObjects': myQuery}
-    return render(request, "index.html", context)
+class Home(View):
+  def get(self,request):
+    return render(request, 'main/index.html')
+  def post(self,request):
+    yourInstance = Thingy()
+    commandInput = request.POST["command"]
+    if commandInput:
+      response = yourInstance.command(commandInput)
+    else:
+      response = ""
+    return render(request, 'main/index.html',{"message":response})
