@@ -20,5 +20,4 @@ from CS361WebApp import views
 
 urlpatterns = [
   url(r'^admin/', admin.site.urls),
-  path("", views.Home.as_view()),
 ]
