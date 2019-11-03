@@ -24,4 +24,6 @@ class TA(Account):
 class Instructor(Account):
   pass
 
-
+class InputManager:
+  def command(self,inStr):
+    return inStr

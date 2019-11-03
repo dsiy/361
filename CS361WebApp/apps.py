@@ -1,5 +1,5 @@
 from django.apps import AppConfig
 
 
-class Cs361WebappConfig(AppConfig):
+class CS361WebappConfig(AppConfig):
     name = 'CS361WebApp'
