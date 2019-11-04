@@ -4,12 +4,11 @@ from CS361WebApp.models import Account, Administrator, TA, Instructor
 
 class AccountTestCase(TestCase):
     def setUp(self):
-        testAccount = Account(email="", password="")
+        Account.objects.create(email="radojev3@uwm.edu", password="")
 
-    def testAccountEmail(self):
-        testAccount = Account(email="", password="")
-        self.assertEquals(testAccount.email, "radojev3@uwm.edu")
-
+    def testAccountEmailexists(self):
+        test = Account.objects.get(email="radojev3@uwm.edu")
+        self.assertEquals(test.email, "radojev3@uwm.edu")
 
 class AdministratorTestCase(TestCase):
     pass
