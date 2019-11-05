@@ -1,8 +1,8 @@
-import unittest
-from courseTime import CourseTime
+from django.test import TestCase
+from CS361WebApp.models import Account, Administrator, TA, Instructor, CourseTime
 
 
-class CourseTimeTest(unittest.TestCase):
+class CourseTimeTest(TestCase):
 
     def setUp(self):
         pass
@@ -113,24 +113,15 @@ class CourseTimeTest(unittest.TestCase):
     def test_admin_classList1(self):
         Account.object.create(email="boyland@uwm.edu", password="unbreakable")
         boyland = Account.get(email="boyland@uwm.edu")
-        Administrator.object.create(boyland)
-        boylandAdmin = Administrator.get(email="boyland@uwm.edu")
-        self.assertIs(boylandAdmin.addClass(name="CS361"), True)
-
-    def test_admin_classlist2(self):
-        Account.object.create(email="boyland@uwm.edu", password="unbreakable")
-        boyland = Account.get(email="boyland@uwm.edu")
-        Administrator.object.create(boyland)
-        boylandAdmin = Administrator.get(email="boyland@uwm.edu")
-        self.assertIs(boylandAdmin.removeClass(name="CS361"), False)
-
-    def test_admin_classlist3(self):
-        Account.object.create(email="boyland@uwm.edu", password="unbreakable")
-        boyland = Account.get(email="boyland@uwm.edu")
-        Administrator.object.create(boyland)
+        Administrator.object.create(email="boyland@uwm.edu", password="unbreakable")
         boylandAdmin = Administrator.get(email="boyland@uwm.edu")
         boylandAdmin.addClass(name="CS361")
-        self.assertIs(boylandAdmin.removeClass(name="CS361"), False)
+
+
+
+
 
 if __name__ == '__main__':
     unittest.main()
+
+
