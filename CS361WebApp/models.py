@@ -37,7 +37,15 @@ class Instructor(Account):
     pass
 
 
-# classList model needs to be added here
+class CourseTime(models.Model):
+    department = models.CharField(max_length=50)
+    number = models.CharField(max_length=50)
+    start = models.CharField(max_length=50)
+    end = models.CharField(max_length=50)
+    day = models.CharField(max_length=50)
+    section = models.CharField(max_length=50)
+    instructor = models.CharField(max_length=50)
+
 
 class InputManager:
     def command(self, command):
