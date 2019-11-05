@@ -6,9 +6,9 @@ class Account(models.Model):
     email = models.CharField(max_length=50)
     password = models.CharField(max_length=50)
 
-    #Returns True if account was succesfully logged in
-    #Throws an error is the account is not valid
-    def Login(self,password):
+    # Returns True if account was succesfully logged in
+    # Throws an error is the account is not valid
+    def Login(self, password):
         pass
 
     def Logout(self):
@@ -35,7 +35,15 @@ class Instructor(Account):
     pass
 
 
-# classList model needs to be added here
+class CourseTime(models.Model):
+    department = models.CharField(max_length=50)
+    number = models.CharField(max_length=50)
+    start = models.CharField(max_length=50)
+    end = models.CharField(max_length=50)
+    day = models.CharField(max_length=50)
+    section = models.CharField(max_length=50)
+    instructor = models.CharField(max_length=50)
+
 
 class InputManager:
     def command(self, command):
