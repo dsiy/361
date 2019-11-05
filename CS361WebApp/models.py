@@ -8,10 +8,10 @@ class Account(models.Model):
 
     # Returns True if account was succesfully logged in
     # Throws an error is the account is not valid
-    def Login(self, password):
+    def login(self, password):
         pass
 
-    def Logout(self):
+    def logout(self):
         pass
 
 

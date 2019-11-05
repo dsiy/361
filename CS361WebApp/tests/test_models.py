@@ -13,45 +13,45 @@ class AccountTestCase(TestCase):
 class AdministratorTestCase(TestCase):
 
     def test_account_login1(self):
-        Account.object.create(email="boyland@uwm.edu", password="unbreakable")
-        boyland = Account.get(email="boyland@uwm.edu")
-        self.assertIs(boyland.Login("unbreakable"), True)
+        Account.objects.create(email="boyland@uwm.edu", password="unbreakable")
+        boyland = Account.objects.get(email="boyland@uwm.edu")
+        self.assertIs(boyland.login("unbreakable"), True)
 
     def test_account_login2(self):
-        Account.object.create(email="boyland@uwm.edu", password="unbreakable")
-        boyland = Account.get(email="boyland@uwm.edu")
+        Account.objects.create(email="boyland@uwm.edu", password="unbreakable")
+        boyland = Account.objects.get(email="boyland@uwm.edu")
         self.assertRaises(boyland.login("wrongPassword"), "InvalidPasswordException")
 
     def test_account_logout1(self):
-        Account.object.create(email="boyland@uwm.edu", password="unbreakable")
-        boyland = Account.get(email="boyland@uwm.edu")
-        boyland.Login("unbreakable")
-        self.assertEqual(boyland.Logout(), True)
+        Account.objects.create(email="boyland@uwm.edu", password="unbreakable")
+        boyland = Account.objects.get(email="boyland@uwm.edu")
+        boyland.login("unbreakable")
+        self.assertEqual(boyland.logout(), True)
 
     def test_account_logout(self):
-        Account.object.create(email="boyland@uwm.edu", password="unbreakable")
-        boyland = Account.get(email="boyland@uwm.edu")
-        self.assertEqual(boyland.Logout(), False)
+        Account.objects.create(email="boyland@uwm.edu", password="unbreakable")
+        boyland = Account.objects.get(email="boyland@uwm.edu")
+        self.assertEqual(boyland.logout(), False)
 
     def test_admin_classList1(self):
-        Account.object.create(email="boyland@uwm.edu", password="unbreakable")
-        boyland = Account.get(email="boyland@uwm.edu")
-        Administrator.object.create(boyland)
-        boylandAdmin = Administrator.get(email="boyland@uwm.edu")
+        Account.objects.create(email="boyland@uwm.edu", password="unbreakable")
+        boyland = Account.objects.get(email="boyland@uwm.edu")
+        Administrator.objects.create(boyland)
+        boylandAdmin = Administrator.objects.get(email="boyland@uwm.edu")
         self.assertIs(boylandAdmin.addClass(name="CS361"), True)
 
     def test_admin_classlist2(self):
-        Account.object.create(email="boyland@uwm.edu", password="unbreakable")
-        boyland = Account.get(email="boyland@uwm.edu")
-        Administrator.object.create(boyland)
-        boylandAdmin = Administrator.get(email="boyland@uwm.edu")
+        Account.objects.create(email="boyland@uwm.edu", password="unbreakable")
+        boyland = Account.objects.get(email="boyland@uwm.edu")
+        Administrator.objects.create(boyland)
+        boylandAdmin = Administrator.objects.get(email="boyland@uwm.edu")
         self.assertIs(boylandAdmin.removeClass(name="CS361"), False)
 
     def test_admin_classlist3(self):
-        Account.object.create(email="boyland@uwm.edu", password="unbreakable")
-        boyland = Account.get(email="boyland@uwm.edu")
-        Administrator.object.create(boyland)
-        boylandAdmin = Administrator.get(email="boyland@uwm.edu")
+        Account.objects.create(email="boyland@uwm.edu", password="unbreakable")
+        boyland = Account.objects.get(email="boyland@uwm.edu")
+        Administrator.objects.create(boyland)
+        boylandAdmin = Administrator.objects.get(email="boyland@uwm.edu")
         boylandAdmin.addClass(name="CS361")
         self.assertIs(boylandAdmin.removeClass(name="CS361"), False)
 
