@@ -1,3 +1,5 @@
+import unittest
+
 from django.test import TestCase
 from CS361WebApp.models import Account, Administrator, TA, Instructor, CourseTime
 
@@ -69,7 +71,7 @@ class CourseTimeTest(TestCase):
     def test_isOnline2(self):
         time = CourseTime
         time.__init__("9000 1100 M")
-        self.assertTrue(time.isOnline, False)
+        self.assertTrue(time.objects.isOnline, False)
 
     # Returns True or False.
     def test_isOverlap1(self):
@@ -77,8 +79,8 @@ class CourseTimeTest(TestCase):
         time2 = CourseTime
         time.__init__("9000 1100 M")
         time2.__init__("1000 1200 M")
-        self.assertTrue(time.isOverlap(time2), True)
-        self.assertTrue(time2.isOverlap(time), True)
+        self.assertTrue(time.objects.isOverlap(time2), True)
+        self.assertTrue(time2.objects.isOverlap(time), True)
 
     # Returns True or False.
     def test_isOverlap2(self):
@@ -86,42 +88,37 @@ class CourseTimeTest(TestCase):
         time2 = CourseTime
         time.__init__("9000 1100 M")
         time2.__init__("online")
-        self.assertTrue(time.isOverlap(time2), False)
-        self.assertTrue(time2.isOverlap(time), False)
+        self.assertTrue(time.objects.isOverlap(time2), False)
+        self.assertTrue(time2.objects.isOverlap(time), False)
 
     def test_account_login1(self):
-        Account.object.create(email="boyland@uwm.edu", password="unbreakable")
-        boyland = Account.get(email="boyland@uwm.edu")
+        Account.objects.create(email="boyland@uwm.edu", password="unbreakable")
+        boyland = Account.objects.get(email="boyland@uwm.edu")
         self.assertIs(boyland.Login("unbreakable"), True)
 
     def test_account_login2(self):
-        Account.object.create(email="boyland@uwm.edu", password="unbreakable")
-        boyland = Account.get(email="boyland@uwm.edu")
+        Account.objects.create(email="boyland@uwm.edu", password="unbreakable")
+        boyland = Account.objects.get(email="boyland@uwm.edu")
         self.assertRaises(boyland.login("wrongPassword"), "InvalidPasswordException")
 
     def test_account_logout1(self):
-        Account.object.create(email="boyland@uwm.edu", password="unbreakable")
-        boyland = Account.get(email="boyland@uwm.edu")
+        Account.objects.create(email="boyland@uwm.edu", password="unbreakable")
+        boyland = Account.objects.get(email="boyland@uwm.edu")
         boyland.Login("unbreakable")
         self.assertEqual(boyland.Logout(), True)
 
     def test_account_logout(self):
-        Account.object.create(email="boyland@uwm.edu", password="unbreakable")
-        boyland = Account.get(email="boyland@uwm.edu")
+        Account.objects.create(email="boyland@uwm.edu", password="unbreakable")
+        boyland = Account.objects.get(email="boyland@uwm.edu")
         self.assertEqual(boyland.Logout(), False)
 
     def test_admin_classList1(self):
-        Account.object.create(email="boyland@uwm.edu", password="unbreakable")
-        boyland = Account.get(email="boyland@uwm.edu")
-        Administrator.object.create(email="boyland@uwm.edu", password="unbreakable")
-        boylandAdmin = Administrator.get(email="boyland@uwm.edu")
+        Account.objects.create(email="boyland@uwm.edu", password="unbreakable")
+        boyland = Account.objects.get(email="boyland@uwm.edu")
+        Administrator.objects.create(email="boyland@uwm.edu", password="unbreakable")
+        boylandAdmin = Administrator.objects.get(email="boyland@uwm.edu")
         boylandAdmin.addClass(name="CS361")
-
-
-
 
 
 if __name__ == '__main__':
     unittest.main()
-
-

@@ -47,6 +47,78 @@ class CourseTime(models.Model):
     instructor = models.CharField(max_length=50)
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 class InputManager:
     def command(self, command):
         output = command
@@ -55,14 +127,74 @@ class InputManager:
         # login
         if first == "login":
             # check size of inputs
-            # check email and password
+            #a = CourseTimeValidator()
+            # if a.validate(command):
             output = "login successful"
+            # check email and password
             output = "login failed"
 
         # logout
         if first == "logout":
             # do thing
-            output = "logout successful"
+            if Account.Logout():
+                output = "logout successful"
 
+        if first == "AddClass":
+          #  a = CourseTimeValidator()
+           # if a.validate(command):
+                output = "Class Successfully Added!"
         # create class command
+        return output
+
+
+
+
+
+
+
+
+
+
+class CourseTimeValidator:  # takes in string. addClass <1> <2> <3>...<n>
+    def validator(self, input):
+        output = True
+        list = input.split()
+        if not len(list) == 7 | list.len() == 8:
+            output = False
+
+        count = 0
+        for a in list:
+            if count == 0:
+                count += 1
+
+            elif count == 1:
+                if (a.isnumeric()) == True:
+                    output = False
+                count += 1
+
+            elif count == 2:
+                if a.isalpha() == True:
+                    output = False
+                count += 1
+
+            elif count == 3:
+                if a.isalpha() == True:
+                    output = False
+                count += 1
+
+            elif count == 4:
+                if a.isalpha() == True:
+                    output = False
+                count += 1
+
+            elif count == 5:
+                if (a.isnumeric()) == True:
+                    output = False
+                count += 1
+
+            elif count == 6:
+                if a.isalpha() == True:
+                    output = False
+                count += 1
+
         return output
