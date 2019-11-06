@@ -63,6 +63,7 @@ class InputManager:
         output = command
         commands = command.split()
         first = commands[0].lower()
+
         # login
         if first == "login":
             # check size of inputs v
@@ -70,12 +71,13 @@ class InputManager:
             # check if there is duplicate
             if (len(commands) < 3) | (not Account.objects.filter(email=commands[1]).exists()):
                 output = "No Such User Exists!"
+            elif loggedIn.objects.get(email=commands[1]).exists():
+                output = "You are already logged in!"
             else:
                 # add to loggedIn table v
                 comein = loggedIn(email=commands[1])
                 comein.save()
                 output = "Log-in Success!"
-
 
         # logout
         if first == "logout":
@@ -90,4 +92,48 @@ class InputManager:
         # just for checking
         output = loggedIn.objects.all()
         # create class command
+        return output
+
+
+class CourseTimeValidator:  # takes in string. addClass <1> <2> <3>...<n>
+    def validator(self, inputString):
+        output = True
+        arr = inputString.split()
+        if not (len(arr) == 7 | len(arr) == 8):
+            output = False
+
+        for count, a in enumerate(arr):
+            if count == 0:
+                pass
+            elif count == 1:
+                if a.isnumeric():
+                    output = False
+
+            elif count == 2:
+                if a.isalpha():
+                    output = False
+
+            elif count == 3:
+                if a.isalpha():
+                    output = False
+
+            elif count == 4:
+                if a.isalpha():
+                    output = False
+
+            elif count == 5:
+                if a.isnumeric():
+                    output = False
+
+            elif count == 6:
+                if a.isalpha():
+                    output = False
+
+        if output % len(arr) == 8:
+            CourseTime(department=arr[1], number=arr[2], start=arr[3], end=arr[4],
+                       day=arr[5], section=arr[6], instructor=arr[7]).save()
+        elif output % len(arr) == 7:
+            CourseTime(department=arr[1], number=arr[2], start=arr[3], end=arr[4],
+                       day=arr[5], section=arr[6]).save()
+
         return output
