@@ -1,3 +1,4 @@
+from django.core.exceptions import ObjectDoesNotExist
 from django.db import models
 
 
@@ -8,11 +9,21 @@ class Account(models.Model):
 
     # Returns True if account was succesfully logged in
     # Throws an error is the account is not valid
-    def Login(self, password):
+    def login(self, password):
         pass
 
-    def Logout(self):
+    def logout(self):
         pass
+
+    def __str__(self):
+        return self.email
+
+
+class loggedIn(models.Model):
+    email = models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.email
 
 
 class Administrator(Account):
@@ -47,7 +58,6 @@ class CourseTime(models.Model):
     instructor = models.CharField(max_length=50)
 
 
-
 class InputManager:
     def command(self, command):
         output = command
@@ -55,23 +65,30 @@ class InputManager:
         first = commands[0].lower()
         # login
         if first == "login":
-            # check size of inputs
-            #a = CourseTimeValidator()
-            # if a.validate(command):
-            output = "login successful"
-            # check email and password
-            output = "login failed"
+            # check size of inputs v
+            # check email and password v
+            # check if there is duplicate
+            if (len(commands) < 3) | (not Account.objects.filter(email=commands[1]).exists()):
+                output = "No Such User Exists!"
+            else:
+                # add to loggedIn table v
+                comein = loggedIn(email=commands[1])
+                comein.save()
+                output = "Log-in Success!"
+
 
         # logout
         if first == "logout":
             # do thing
-            if Account.Logout():
-                output = "logout successful"
-
-        if first == "AddClass":
-          #  a = CourseTimeValidator()
-           # if a.validate(command):
-                output = "Class Successfully Added!"
+            if ((not Account.objects.filter(email=commands[1]).exists())
+                    | (not loggedIn.objects.filter(email=commands[1]).exists())):
+                output = "You are not logged in!"
+            else:
+                getout = loggedIn.objects.get(email=commands[1])
+                getout.delete()
+                output = "Log-out Success!"
+        # just for checking
+        output = loggedIn.objects.all()
         # create class command
         return output
 

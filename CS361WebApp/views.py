@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.views import View
 from CS361WebApp.models import InputManager
-
+from django.contrib.auth.models import User
 
 class TAManager(View):
     def get(self, request):
@@ -15,6 +15,7 @@ class TAManager(View):
         else:
             response = ""
         return render(request, 'main/index.html', {"message": response})
+
 
 def about(request):
     return render(request, "main/about.html")
