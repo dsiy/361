@@ -72,7 +72,7 @@ class AdministratorTestCase(TestCase):
     def test_admin_classlist3(self):
         Administrator.objects.create(email="boyland@uwm.edu", password="unbreakable")
         boyland = Administrator.objects.get(email="boyland@uwm.edu")
-        self.assertEqual(boyland.addClass("CS361"), True)
+        self.assertEqual(boyland.addClass("CS361" ), True)
         self.assertEqual(boyland.removeClass("CS361"), True)
 
     def test_admin_classlist4(self):
