@@ -74,7 +74,7 @@ class InputManager:
             if (len(commands) < 3) | (not Account.objects.filter(email=commands[1]).exists()):
                 output = "No Such User Exists!"
             elif (Account.objects.filter(email=commands[1]).exists() &
-                  (Account.objects.get(email='hojin@uwm.edu').get_password() != commands[2])):
+                  (Account.objects.get(email=commands[1]).get_password() != commands[2])):
                 output = "Your password is incorrect!"
             elif loggedIn.objects.filter(email=commands[1]).exists():
                 output = "You are already logged in!"
