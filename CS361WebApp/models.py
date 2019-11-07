@@ -6,27 +6,41 @@ from django.db import models
 class Account(models.Model):
     email = models.CharField(max_length=50)
     password = models.CharField(max_length=50)
+    loggedIn = models.BooleanField(default=False)
 
     # Returns True if account was succesfully logged in
     # Throws an error is the account is not valid
     def login(self, password):
-        pass
+
+        if self.password != password:
+            output = "Your password is incorrect!"
+
+        elif self.loggedIn:
+            output = "You are already logged in!"
+
+        else:
+            # add to loggedIn table v
+            self.loggedIn = True
+            self.save()
+            output = "Log-in Success!"
+
+        return output
 
     def logout(self):
-        pass
+        if not self.loggedIn:
+            output = "You are not logged in!"
+        else:
+            self.loggedIn = False
+            self.save()
+            output = "Log-out Success!"
+
+        return output
 
     def __str__(self):
         return self.email
 
     def get_password(self):
         return self.password
-
-
-class loggedIn(models.Model):
-    email = models.CharField(max_length=50)
-
-    def __str__(self):
-        return self.email
 
 
 class Administrator(Account):
@@ -66,34 +80,27 @@ class InputManager:
         output = command
         commands = command.split()
         first = commands[0].lower()
+
         # login
         if first == "login":
             # check size of inputs v
             # check email and password v
-            # check if there is duplicate
+            # check if there is duplicate v
+
             if (len(commands) < 3) | (not Account.objects.filter(email=commands[1]).exists()):
                 output = "No Such User Exists!"
-            elif (Account.objects.filter(email=commands[1]).exists() &
-                  (Account.objects.get(email='hojin@uwm.edu').get_password() != commands[2])):
-                output = "Your password is incorrect!"
-            elif loggedIn.objects.filter(email=commands[1]).exists():
-                output = "You are already logged in!"
-            else:
-                # add to loggedIn table v
-                comein = loggedIn(email=commands[1])
-                comein.save()
-                output = "Log-in Success!"
-
+            elif Account.objects.filter(email=commands[1]).exists():
+                try:
+                    output = Account.objects.filter(email=commands[1])[0].login(commands[2])
+                except Account.DoesNotExist:
+                    output = "No Such User Exists!"
         # logout
         if first == "logout":
-            # do thing
-            if ((not Account.objects.filter(email=commands[1]).exists())
-                    | (not loggedIn.objects.filter(email=commands[1]).exists())):
-                output = "You are not logged in!"
+            # if logged in
+            if len(commands) < 2 | (not Account.objects.filter(email=commands[1]).exists()):
+                output = "No Such User Exists!"
             else:
-                getout = loggedIn.objects.get(email=commands[1])
-                getout.delete()
-                output = "Log-out Success!"
+                output = Account.objects.filter(email=commands[1])[0].logout()
 
         if first == "addClass":
             cv = CourseTimeValidator()
