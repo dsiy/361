@@ -102,7 +102,7 @@ class InputManager:
             else:
                 output = "Invalid Class!"
         # just for checking
-        output =  str(loggedIn.objects.all()) + "   " + output
+        # output =  str(loggedIn.objects.all()) + "   " + output
         # if loggedIn.objects.all(): output = 'wahhh!!'
 
         # create class command
