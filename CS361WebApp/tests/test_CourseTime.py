@@ -1,7 +1,6 @@
-import unittest
 
 from django.test import TestCase
-from CS361WebApp.models import Account, Administrator, TA, Instructor, CourseTime
+from CS361WebApp.models import Account, Administrator, TA, Instructor, CourseTime, CourseTimeValidator
 
 
 class CourseTimeTest(TestCase):
@@ -11,53 +10,45 @@ class CourseTimeTest(TestCase):
 
     # Returns True or False.
     def test_init1(self):
-        time = CourseTime
-        with self.assertRaises(TypeError):
-            time.__init__("")
+        time = CourseTimeValidator.validator("")
+        self.assertEquals(time, False);
 
     # Returns True or False.
     def test_init2(self):
-        time = CourseTime
-        with self.assertRaises(TypeError):
-            time.__init__(2)
+        time = CourseTimeValidator.validator("addClass CS351")
+        self.assertEquals(time, False)
 
     # Returns True or False.
     def test_init3(self):
-        time = CourseTime
-        time.__init__("online")
+        time = CourseTime.objects.create(start="midnight", end="midnight", day=None);
         self.assertEqual(time.start, "midnight")
         self.assertEqual(time.end, "midnight")
         self.assertEqual(time.day, None)
 
     # Returns True or False.
     def test_init4(self):
-        time = CourseTime
-        with self.assertRaises(TypeError):
-            time.__init__("9000 1100 S")
+        time = CourseTimeValidator.validator("addClass compsci 351 9000 1100 S 801 Rock")
+        self.assertEquals(time, True)
 
     # Returns True or False.
     def test_str1(self):
-        time = CourseTime
-        time.__init__("online")
-        self.assertEqual(time.__str__(), "online")
+        time = CourseTimeValidator.validator("addClass compsci 341 0000 0000 S 801 Rock")
+        self.assertEquals(time, True)
 
     # Returns True or False.
     def test_str2(self):
-        time = CourseTime
-        time.__init__("9000 1100 M")
-        self.assertEqual(time.__str__(), "9000 1100 M")
+        time = CourseTimeValidator.validator("addClass busadmin 351 9000 1100 S 801")
+        self.assertEquals(time, True)
 
     # Returns True or False.
     def test_start(self):
-        time = CourseTime
-        time.__init__("9000 1100 M")
+        time = CourseTime.objects.create(department= "compsci", start= 9000)
         self.assertEqual(time.start, "9000")
         self.assertNotEqual(time.start, "1100")
 
     # Returns True or False.
     def test_end(self):
-        time = CourseTime
-        time.__init__("9000 1100 M")
+        time = CourseTime.objects.create(department= "compsci", start= 1100)
         self.assertEqual(time.start, "1100")
         self.assertNotEqual(time.start, "9000")
 

@@ -21,8 +21,8 @@ class AcceptanceTests(TestCase):
         # if user is admin, then turn on permissions
         Administrator.objects.create(email="boyland.uwm.edu", password="Unbr3akable!")
         Account.objects.create(email="dssiy@uwm.edu", password="P4ssw0rd!")
-        a = "login boyland.uwm.edu password Unbr3akable!"
-        b = "login other.uwm.edu password P4ssw0rd!"
+        a = "login boyland@uwm.edu Unbr3akable!"
+        b = "login other@uwm.edu P4ssw0rd!"
         self.assertEqual(app.command(a), "true")
         self.assertEqual(app.command(b), "false")
 
@@ -42,17 +42,52 @@ class AcceptanceTests(TestCase):
         # Login
         # Enter Username:
         # Enter Password:
-        a = "login"
-        self.assertEqual(app.command(a), "login successful")
+        Account.objects.create(email="hojin@uwm.edu", password="haha")
+        a = "login hojin@uwm.edu haha"
+        self.assertEqual(app.command(a), "Log-in Success!")
         # Not sure if this is the correct format for assertion test but I think this is what we should be checking
+
+    # 2 Admin login failure
+    def test_Login(self):
+        # user will type in the command "Login" when they don't have an account
+        # Login
+        # Enter Username:
+        # Enter Password:
+        a = "login hojin@uwm.edu haha"
+        self.assertEqual(app.command(a), "No Such User Exists!")
+
+    # 3 Admin login failure
+    def test_Login(self):
+        # user will type in the command "Login"
+        # Login
+        # Enter Username:
+        # Enter Password:
+        # Enter login again when they are already logged in
+        Account.objects.create(email="hojin@uwm.edu", password="haha")
+        a = "login hojin@uwm.edu haha"
+        self.assertEqual(app.command(a), "Log-in Success!")
+        self.assertEqual(app.command(a), "You are already logged in!")
+
+    # 2 Admin login failure
+    def test_Login(self):
+        # user will type in the command "Login"
+        # Login
+        # Enter Username:
+        # Enter Incorrect Password:
+        Account.objects.create(email="hojin@uwm.edu", password="haha")
+        a = "login hojin@uwm.edu yeet"
+        self.assertEqual(app.command(a), "Your password is incorrect!")
 
     # 2 User Log Out
     def test_logOut(self):
         # Test 1
         # Given that the user (TAs, Administrator, Instructor) presses the logout button
         # If the button is clicked then the user is redirected to the login screen.
+        Account.objects.create(email="hojin@uwm.edu", password="haha")
+        a = "login hojin@uwm.edu haha"
+        self.assertEqual(app.command(a), "Log-in Success!")
         a = "logout"
-        self.assertEqual(app.command(a), "logout successful")
+        self.assertEqual(app.command(a), "Log-out Success!")
 
     # 3 Class list
     def test_isEmpty(self):
