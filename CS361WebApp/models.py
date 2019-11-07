@@ -18,6 +18,9 @@ class Account(models.Model):
     def __str__(self):
         return self.email
 
+    def get_password(self):
+        return self.password
+
 
 class loggedIn(models.Model):
     email = models.CharField(max_length=50)
@@ -63,7 +66,6 @@ class InputManager:
         output = command
         commands = command.split()
         first = commands[0].lower()
-
         # login
         if first == "login":
             # check size of inputs v
@@ -71,7 +73,10 @@ class InputManager:
             # check if there is duplicate
             if (len(commands) < 3) | (not Account.objects.filter(email=commands[1]).exists()):
                 output = "No Such User Exists!"
-            elif loggedIn.objects.get(email=commands[1]).exists():
+            elif (Account.objects.filter(email=commands[1]).exists() &
+                  (Account.objects.get(email='hojin@uwm.edu').get_password() != commands[2])):
+                output = "Your password is incorrect!"
+            elif loggedIn.objects.filter(email=commands[1]).exists():
                 output = "You are already logged in!"
             else:
                 # add to loggedIn table v
@@ -89,8 +94,17 @@ class InputManager:
                 getout = loggedIn.objects.get(email=commands[1])
                 getout.delete()
                 output = "Log-out Success!"
+
+        if first == "addClass":
+            cv = CourseTimeValidator()
+            if cv.validator(command):
+                output = "Class successfully created!"
+            else:
+                output = "Invalid Class!"
         # just for checking
-        output = loggedIn.objects.all()
+        output =  str(loggedIn.objects.all()) + "   " + output
+        # if loggedIn.objects.all(): output = 'wahhh!!'
+
         # create class command
         return output
 
