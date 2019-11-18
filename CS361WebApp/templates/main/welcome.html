@@ -5,7 +5,7 @@
             <h1>Welcome to TA Scheduler!</h1>
             {% if user.is_authenticated %}
             <p>Welcome to the TA Scheduling App, please click to schedule!</p>
-            <a href="index.html"><button class="btn btn-primary">Schedule</button></a>
+            <a href="{% url 'commands' %}"><button class="btn btn-primary">Schedule</button></a>
             {% else %}
             Please login.
             <form method="post" action="/">

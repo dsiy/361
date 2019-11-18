@@ -21,5 +21,6 @@ from CS361WebApp import views
 urlpatterns = [
   path('accounts/', include('django.contrib.auth.urls'), name='accounts'),
   path('admin/', admin.site.urls, name='admin'),
-  path('', views.Welcome.as_view(), name='welcome')
+  path('', views.Welcome.as_view(), name='welcome'),
+  path('/commands', views.TAManager.as_view(), name='commands')
 ]
