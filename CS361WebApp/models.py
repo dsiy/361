@@ -1,3 +1,4 @@
+from django.core.exceptions import ObjectDoesNotExist
 from django.db import models
 
 
@@ -5,14 +6,41 @@ from django.db import models
 class Account(models.Model):
     email = models.CharField(max_length=50)
     password = models.CharField(max_length=50)
+    loggedIn = models.BooleanField(default=False)
 
     # Returns True if account was succesfully logged in
     # Throws an error is the account is not valid
-    def Login(self, password):
-        pass
+    def login(self, password):
 
-    def Logout(self):
-        pass
+        if self.password != password:
+            output = "Your password is incorrect!"
+
+        elif self.loggedIn:
+            output = "You are already logged in!"
+
+        else:
+            # add to loggedIn table v
+            self.loggedIn = True
+            self.save()
+            output = "Log-in Success!"
+
+        return output
+
+    def logout(self):
+        if not self.loggedIn:
+            output = "You are not logged in!"
+        else:
+            self.loggedIn = False
+            self.save()
+            output = "Log-out Success!"
+
+        return output
+
+    def __str__(self):
+        return self.email
+
+    def get_password(self):
+        return self.password
 
 
 class Administrator(Account):
@@ -52,68 +80,81 @@ class InputManager:
         output = command
         commands = command.split()
         first = commands[0].lower()
+
         # login
         if first == "login":
-            # check size of inputs
-            #a = CourseTimeValidator()
-            # if a.validate(command):
-            output = "login successful"
-            # check email and password
-            output = "login failed"
+            # check size of inputs v
+            # check email and password v
+            # check if there is duplicate v
 
+            if (len(commands) < 3) | (not Account.objects.filter(email=commands[1]).exists()):
+                output = "No Such User Exists!"
+            elif Account.objects.filter(email=commands[1]).exists():
+                try:
+                    output = Account.objects.filter(email=commands[1])[0].login(commands[2])
+                except Account.DoesNotExist:
+                    output = "No Such User Exists!"
         # logout
         if first == "logout":
-            # do thing
-            if Account.Logout():
-                output = "logout successful"
+            # if logged in
+            if len(commands) < 2 | (not Account.objects.filter(email=commands[1]).exists()):
+                output = "No Such User Exists!"
+            else:
+                output = Account.objects.filter(email=commands[1])[0].logout()
 
-        if first == "AddClass":
-          #  a = CourseTimeValidator()
-           # if a.validate(command):
-                output = "Class Successfully Added!"
+        if first == "addClass":
+            cv = CourseTimeValidator()
+            if cv.validator(command):
+                output = "Class successfully created!"
+            else:
+                output = "Invalid Class!"
+        # just for checking
+        # output =  str(loggedIn.objects.all()) + "   " + output
+        # if loggedIn.objects.all(): output = 'wahhh!!'
+
         # create class command
         return output
 
+
 class CourseTimeValidator:  # takes in string. addClass <1> <2> <3>...<n>
-    def validator(self, input):
+    def validator(self, inputString):
         output = True
-        list = input.split()
-        if not len(list) == 7 | list.len() == 8:
+        arr = inputString.split()
+        if not (len(arr) == 7 | len(arr) == 8):
             output = False
 
-        count = 0
-        for a in list:
+        for count, a in enumerate(arr):
             if count == 0:
-                count += 1
-
+                pass
             elif count == 1:
-                if (a.isnumeric()) == True:
+                if a.isnumeric():
                     output = False
-                count += 1
 
             elif count == 2:
-                if a.isalpha() == True:
+                if a.isalpha():
                     output = False
-                count += 1
 
             elif count == 3:
-                if a.isalpha() == True:
+                if a.isalpha():
                     output = False
-                count += 1
 
             elif count == 4:
-                if a.isalpha() == True:
+                if a.isalpha():
                     output = False
-                count += 1
 
             elif count == 5:
-                if (a.isnumeric()) == True:
+                if a.isnumeric():
                     output = False
-                count += 1
 
             elif count == 6:
-                if a.isalpha() == True:
+                if a.isalpha():
                     output = False
-                count += 1
+
+        if output % len(arr) == 8:
+            CourseTime(department=arr[1], number=arr[2], start=arr[3], end=arr[4],
+                       day=arr[5], section=arr[6], instructor=arr[7]).save()
+        elif output % len(arr) == 7:
+            CourseTime(department=arr[1], number=arr[2], start=arr[3], end=arr[4],
+                       day=arr[5], section=arr[6]).save()
 
         return output
