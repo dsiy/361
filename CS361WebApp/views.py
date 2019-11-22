@@ -1,26 +1,22 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views import View
 from django.contrib import auth
-from django.http import HttpResponseRedirect, HttpResponse
 from CS361WebApp.models import InputManager
 
 
-class TAManager(View):
-    def get(self, request):
-        return render(request, 'main/index.html')
+def home(request):
+    manager = InputManager()
+    commandInput = request.POST["command"]
+    if commandInput:
+        response = manager.command(commandInput)
+    else:
+        response = ""
+    return render(request, 'CS361WebApp/home.html', {"message": response})
 
-    def post(self, request):
-        manager = InputManager()
-        commandInput = request.POST["command"]
-        if commandInput:
-            response = manager.command(commandInput)
-        else:
-            response = ""
-        return render(request, 'main/index.html', {"message": response})
 
-class Welcome(View):
-    def get(self, request):
-        return render(request, "main/welcome.html")
+def welcome(request):
+    if request.method == 'POST':
+        return redirect('login')
+    return render(request, "CS361WebApp/welcome.html")
 
-    def post(self, request):
-        return HttpResponseRedirect('/accounts/login')
+
