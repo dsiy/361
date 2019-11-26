@@ -6,13 +6,21 @@ from CS361WebApp.models import InputManager
 
 def home(request):
     manager = InputManager()
-    commandInput = request.POST["command"]
+    commandInput = request.POST
     if commandInput:
         response = manager.command(commandInput)
     else:
         response = ""
     return render(request, 'CS361WebApp/home.html', {"message": response})
 
+# def home(request):
+#     manager = InputManager()
+#     commandInput = request.POST["command"]
+#     if commandInput:
+#         response = manager.command(commandInput)
+#     else:
+#         response = ""
+#     return render(request, 'CS361WebApp/home.html', {"message": response})
 
 def welcome(request):
     if request.method == 'POST':
