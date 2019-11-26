@@ -1,0 +1,18 @@
+{% extends "CS361WebApp/base.html" %}
+{% block content %}
+    <div class="row">
+        <div class="col">
+            <form method="POST" action="/">
+                {% csrf_token %}
+                <div id="form-control" class="card" style="width: 18rem;">
+                    <div class="card-body">
+                        <h5 class="card-title">Input A Command:</h5>
+                        <input class="form-control" type="text" name="command"><br/>
+                        <button class="btn btn-dark" type="submit">Submit</button>
+                    </div>
+                    <p>{{ message }}</p>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock content %}
