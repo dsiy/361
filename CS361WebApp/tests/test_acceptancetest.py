@@ -260,6 +260,12 @@ class AcceptanceTests(TestCase):
         x = a.selectClasses()
         self.assertEqual(app.command(x), "<List of classes in priority order>")
 
+    def test_priority_change(self):
+        # Given a list of classes in priority order, TA will have the option to change their priority list. Program will reassign courses and display new priority list.
+        a = TA.objects.create(email="testemail@yahoo.com", password="Test34!")
+        x = a.selectClasses()
+        self.assertEqual(app.command(x), "<Modified list of classes in priority order>")
+
         # 12 Instructor - Class view
 
     def test_View_Class1(self):
@@ -283,3 +289,4 @@ class AcceptanceTests(TestCase):
         a = Administrator.objects.create(email="boyland@uwm.edu", password="Unbr3akable!")
         x = a.assignTA()
         self.assertTrue(app.command(x), "TA assigned.")
+

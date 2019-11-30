@@ -107,8 +107,131 @@ class AdministratorTestCase(TestCase):
         self.assertEqual(boyland.addClass("CS395"), False)
 
 class TATestCase(TestCase):
-    pass
 
+    def test_TA_priority_create1(self):
+        TA.objects.create(email="skravi@uwm.edu", password="imaTA32!")
+        santha = TA.objects.get(email="skravi@uwm.edu")
+        list = ["CS361", "CS337", "CS395"]
+        self.assertEqual(santha.addClass("CS361", 1), True)
+        self.assertEqual(santha.addClass("CS337", 2), True)
+        self.assertEqual(santha.addClass("CS395", 3), True)
+        self.assertEqual(santa.viewPriority(), list)
+
+    def test_TA_priority_create2(self):
+        TA.objects.create(email="skravi@uwm.edu", password="imaTA32!")
+        santha = TA.objects.get(email="skravi@uwm.edu")
+        list = ["cs361", "cS337", "CS395"]
+        self.assertEqual(santha.addClass("cs361", 1), True)
+        self.assertEqual(santha.addClass("cS337", 2), True)
+        self.assertEqual(santha.addClass("CS395", 3), True)
+        self.assertEqual(santa.viewPriority(), list)
+
+    def test_TA_priority_create3(self):
+        TA.objects.create(email="skravi@uwm.edu", password="imaTA32!")
+        santha = TA.objects.get(email="skravi@uwm.edu")
+        list = ["cs361", "CS337", "CS395"]
+        self.assertEqual(santha.addClass("CS361", 1), True)
+        self.assertEqual(santha.addClass("CS361", 1), False)
+        self.assertEqual(santha.removeClass("CS361"), True)
+        self.assertEqual(santha.addClass("cs361", 1), True)
+        self.assertEqual(santha.addClass("CS420", 2), False)
+        self.assertEqual(santha.addClass("CS337", 2), True)
+        self.assertEqual(santha.addClass("CS395", 3), True)
+        self.assertEqual(santa.viewPriority(), list)
+
+    def test_TA_priority_view_empty(self):
+        TA.objects.create(email="skravi@uwm.edu", password="imaTA32!")
+        santha = TA.objects.get(email="skravi@uwm.edu")
+        list = []
+        self.assertEqual(santha.viewPriority(), list)
+
+    def test_TA_priority_view1(self):
+        TA.objects.create(email="skravi@uwm.edu", password="imaTA32!")
+        santha = TA.objects.get(email="skravi@uwm.edu")
+        list = ["cs361", "CS337", "CS395"]
+        self.assertEqual(santha.addClass("CS361", 1), True)
+        self.assertEqual(santha.addClass("CS337", 2), True)
+        self.assertEqual(santha.addClass("CS395", 3), True)
+        self.assertEqual(santha.viewPriority(), list)
+
+    def test_TA_priority_view2(self):
+        TA.objects.create(email="skravi@uwm.edu", password="imaTA32!")
+        santha = TA.objects.get(email="skravi@uwm.edu")
+        list = ["CS395", "CS337", "CS361"]
+        self.assertEqual(santha.addClass("CS361", 1), True)
+        self.assertEqual(santha.addClass("CS337", 1), True)
+        self.assertEqual(santha.addClass("CS395", 1), True)
+        self.assertEqual(santha.viewPriority(), list)
+
+    def test_TA_priority_overlap(self):
+        TA.objects.create(email="skravi@uwm.edu", password="imaTA32!")
+        santha = TA.objects.get(email="skravi@uwm.edu")
+        list = ["CS395", "CS337", "CS361"]
+        self.assertEqual(santha.addClass("CS361", 1), True)
+        self.assertEqual(santha.addClass("CS337", 1), True)
+        self.assertEqual(santha.addClass("CS395", 1), True)
+        self.assertEqual(santha.viewPriority(), list)
+
+    def test_TA_priority_remove1(self):
+        TA.objects.create(email="skravi@uwm.edu", password="imaTA32!")
+        santha = TA.objects.get(email="skravi@uwm.edu")
+        list = []
+        self.assertEqual(santha.addClass("CS361", 1), True)
+        self.assertEqual(santha.addClass("CS337", 2), True)
+        self.assertEqual(santha.addClass("CS395", 3), True)
+        self.assertEqual(santha.removeClass("CS361"), True)
+        self.assertEqual(santha.removeClass("CS337"), True)
+        self.assertEqual(santha.removeClass("CS395"), True)
+        self.assertEqual(santha.viewPriority(), list)
+
+    def test_TA_priority_remove2(self):
+        TA.objects.create(email="skravi@uwm.edu", password="imaTA32!")
+        santha = TA.objects.get(email="skravi@uwm.edu")
+        list = []
+        self.assertEqual(santha.addClass("CS361", 1), True)
+        self.assertEqual(santha.addClass("CS337", 2), True)
+        self.assertEqual(santha.addClass("CS395", 3), True)
+        self.assertEqual(santha.removeClass("CS361"), True)
+        self.assertEqual(santha.removeClass("CS361"), False)
+        self.assertEqual(santha.removeClass("CS337"), True)
+        self.assertEqual(santha.removeClass("CS395"), True)
+        self.assertEqual(santha.viewPriority(), list)
+
+    def test_TA_priority_remove3(self):
+        TA.objects.create(email="skravi@uwm.edu", password="imaTA32!")
+        santha = TA.objects.get(email="skravi@uwm.edu")
+        list = ["CS395"]
+        self.assertEqual(santha.addClass("CS361", 1), True)
+        self.assertEqual(santha.addClass("CS337", 2), True)
+        self.assertEqual(santha.addClass("CS395", 3), True)
+        self.assertEqual(santha.removeClass("CS361"), True)
+        self.assertEqual(santha.removeClass("CS420"), False)
+        self.assertEqual(santha.removeClass("CS337"), True)
+        self.assertEqual(santha.viewPriority(), list)
+
+    def test_TA_priority_change1(self):
+        TA.objects.create(email="skravi@uwm.edu", password="imaTA32!")
+        santha = TA.objects.get(email="skravi@uwm.edu")
+        list = ["CS361", "CS395", "CS337"]
+        self.assertEqual(santha.addClass("CS361", 1), True)
+        self.assertEqual(santha.addClass("CS337", 1), True)
+        self.assertEqual(santha.addClass("CS395", 1), True)
+        self.assertEqual(santha.changePriority("CS 395", 3), True)
+        self.assertEqual(santha.changePriority("CS 337", 2), True)
+        self.assertEqual(santha.changePriority("CS 361", 1), True)
+        self.assertEqual(santha.viewPriority(), list)
+
+    def test_TA_priority_change2(self):
+        TA.objects.create(email="skravi@uwm.edu", password="imaTA32!")
+        santha = TA.objects.get(email="skravi@uwm.edu")
+        list = ["CS395", "CS337", "CS361"]
+        self.assertEqual(santha.addClass("CS361", 1), True)
+        self.assertEqual(santha.addClass("CS337", 1), True)
+        self.assertEqual(santha.addClass("CS395", 1), True)
+        self.assertEqual(santha.changePriority("CS 361", 1), True)
+        self.assertEqual(santha.changePriority("CS 337", 1), True)
+        self.assertEqual(santha.changePriority("CS 395", 1), True)
+        self.assertEqual(santha.viewPriority(), list)
 
 class InstructorTestCase(TestCase):
     pass

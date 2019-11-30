@@ -60,6 +60,18 @@ class TA(Account):
     def fill_Info(self):
         pass
 
+    def addClass(self, className, priority):
+        pass
+
+    def viewPriorityList(self):
+        pass
+
+    def changePriority(self, className, priority):
+        pass
+
+    def removeClass(self, className):
+        pass
+
 
 class Instructor(Account):
     pass
