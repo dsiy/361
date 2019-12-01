@@ -283,3 +283,56 @@ class AcceptanceTests(TestCase):
         a = Administrator.objects.create(email="boyland@uwm.edu", password="Unbr3akable!")
         x = a.assignTA()
         self.assertTrue(app.command(x), "TA assigned.")
+
+    # Tests for viewing the class list
+    def test_view_classlist1(self):
+        # Test 1
+        # Given administrative access, the user can assign TAs to assign courses.
+        a = Administrator.objects.create(email="boyland@uwm.edu", password="Unbr3akable!")
+        x = a.viewClassList()
+        self.assertEqual(app.command(x), "Class List is Empty")
+
+    def test_view_classlist2(self):
+        # Test 2
+        # Given administrative access, the user can assign TAs to assign courses.
+        a = Administrator.objects.create(email="boyland@uwm.edu", password="Unbr3akable!")
+        c1 = "CS361 802 1400 1600 Rock"
+        c2 = "CS395 801 1200 1300 Cheng"
+        ac1 = a.addClass(c1)
+        self.assertEqual(app.command(ac1), "Class Successfully Added!")
+        ac2 = a.addClass(c2)
+        self.assertEqual(app.command(ac2), "Class Successfully Added!")
+        x = a.viewClassList()
+        self.assertEqual(app.command(x), "CS361 802 1400 1600 Rock\nCS395 801 1200 1300 Cheng\n")
+
+    def test_view_classlist3(self):
+        # Test 3
+        # Given administrative access, the user can assign TAs to assign courses.
+        a = Administrator.objects.create(email="boyland@uwm.edu", password="Unbr3akable!")
+        c1 = "CS361 802 1400 1600 Rock"
+        c2 = "CS395 801 1200 1300 Cheng"
+        c3 = "CS395 801 1200 1300"
+        ac1 = a.addClass(c1)
+        self.assertEqual(app.command(ac1), "Class Successfully Added!")
+        ac2 = a.addClass(c2)
+        self.assertEqual(app.command(ac2), "Class Successfully Added!")
+        ac3 = a.addClass(c3)
+        self.assertEqual(app.command(ac2), "Class is missing information and was not added!")
+        x = a.viewClassList()
+        self.assertEqual(app.command(x), "CS361 802 1400 1600 Rock\nCS395 801 1200 1300 Cheng\n")
+
+    def test_view_classlist3(self):
+        # Test 3
+        # Given administrative access, the user can assign TAs to assign courses.
+        a = Administrator.objects.create(email="boyland@uwm.edu", password="Unbr3akable!")
+        c1 = "CS361 802 1400 1600 Rock"
+        c2 = "CS395 801 1200 1300 Cheng"
+        c3 = "CS395 801 1200 1300 Cheng"
+        ac1 = a.addClass(c1)
+        self.assertEqual(app.command(ac1), "Class Successfully Added!")
+        ac2 = a.addClass(c2)
+        self.assertEqual(app.command(ac2), "Class Successfully Added!")
+        ac3 = a.addClass(c3)
+        self.assertEqual(app.command(ac2), "Class already exists and was not added!")
+        x = a.viewClassList()
+        self.assertEqual(app.command(x), "CS361 802 1400 1600 Rock\nCS395 801 1200 1300 Cheng\n")

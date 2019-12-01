@@ -106,6 +106,18 @@ class AdministratorTestCase(TestCase):
         self.assertEqual(boyland.removeClass("CS395"), True)
         self.assertEqual(boyland.addClass("CS395"), False)
 
+    def test_admin_view_classlist1(self):
+        Administrator.objects.create(email="boyland@uwm.edu", password="unbreakable")
+        boyland = Administrator.objects.get(email="boyland@uwm.edu")
+        self.assertEqual(boyland.addClass("CS395"), True)
+        self.assertEqual(boyland.addClass("CS361"), True)
+        self.assertEqual(boyland.viewClass(), True)
+
+    def test_admin_view_classlist2(self):
+        Administrator.objects.create(email="boyland@uwm.edu", password="unbreakable")
+        boyland = Administrator.objects.get(email="boyland@uwm.edu")
+        self.assertEqual(boyland.viewClass(), False)
+
 class TATestCase(TestCase):
     pass
 
