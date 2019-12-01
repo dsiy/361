@@ -1,10 +1,16 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from .forms import UserRegisterForm
-from django.contrib.auth.decorators import login_required,user_passes_test
+from django.contrib.auth.decorators import login_required, user_passes_test
+from django.contrib.auth.models import User
+
+
+def admin_check(user):
+    return user.is_staff
 
 
 @login_required
+@user_passes_test(admin_check)
 def register(request):
     if request.method == 'POST':
         form = UserRegisterForm(request.POST)
@@ -17,8 +23,6 @@ def register(request):
     else:
         form = UserRegisterForm()
     return render(request, 'user/register.html', {'form': form})
-
-
 
 # def login(request):
 #     form = UserRegisterForm()
