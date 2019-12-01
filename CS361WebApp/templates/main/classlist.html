@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block content %}
+     <div class="row">
+        <div class="col">
+            <form method="post" action="/">
+                {% csrf_token %}
+                <div id="form-control" class="card" style="width: 18rem;">
+                    <div class="card-body">
+                        <h1> Class List View</h1>
+                            {% for class in CourseTime %}
+                                <h2>{{ class.department }}</h2>
+                                <p> Class Number : {{ class.number }}</p>
+                                <p>Start Time: {{ class.start }}</p>
+                                <p>End Time: {{ class.end }}</p>
+                                <p>Day: {{ class.day }}</p>
+                                <p>Instructor: {{ class.instructor }}</p>
+                            {% endfor %}
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock content %}

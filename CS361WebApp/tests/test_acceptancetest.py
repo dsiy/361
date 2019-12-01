@@ -296,8 +296,8 @@ class AcceptanceTests(TestCase):
         # Test 2
         # Given administrative access, the user can assign TAs to assign courses.
         a = Administrator.objects.create(email="boyland@uwm.edu", password="Unbr3akable!")
-        c1 = "CS361 802 1400 1600 Rock"
-        c2 = "CS395 801 1200 1300 Cheng"
+        c1 = "CS361 802 1400 1600 Tuesday Rock"
+        c2 = "CS395 801 1200 1300 Monday Cheng"
         ac1 = a.addClass(c1)
         self.assertEqual(app.command(ac1), "Class Successfully Added!")
         ac2 = a.addClass(c2)
@@ -309,8 +309,8 @@ class AcceptanceTests(TestCase):
         # Test 3
         # Given administrative access, the user can assign TAs to assign courses.
         a = Administrator.objects.create(email="boyland@uwm.edu", password="Unbr3akable!")
-        c1 = "CS361 802 1400 1600 Rock"
-        c2 = "CS395 801 1200 1300 Cheng"
+        c1 = "CS361 802 1400 1600 Tuesday Rock"
+        c2 = "CS395 801 1200 1300 Monday Cheng"
         c3 = "CS395 801 1200 1300"
         ac1 = a.addClass(c1)
         self.assertEqual(app.command(ac1), "Class Successfully Added!")
@@ -325,9 +325,9 @@ class AcceptanceTests(TestCase):
         # Test 3
         # Given administrative access, the user can assign TAs to assign courses.
         a = Administrator.objects.create(email="boyland@uwm.edu", password="Unbr3akable!")
-        c1 = "CS361 802 1400 1600 Rock"
-        c2 = "CS395 801 1200 1300 Cheng"
-        c3 = "CS395 801 1200 1300 Cheng"
+        c1 = "CS361 802 1400 1600 Tuesday Rock"
+        c2 = "CS395 801 1200 1300 Monday Cheng"
+        c3 = "CS395 801 1200 1300 Monday Cheng"
         ac1 = a.addClass(c1)
         self.assertEqual(app.command(ac1), "Class Successfully Added!")
         ac2 = a.addClass(c2)

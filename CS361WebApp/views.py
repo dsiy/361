@@ -24,3 +24,7 @@ class Welcome(View):
 
     def post(self, request):
         return HttpResponseRedirect('/accounts/login')
+
+class ClassList(View):
+    def get(self, request):
+        return render(request, "main/classlist.html")
