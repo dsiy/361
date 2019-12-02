@@ -1,8 +1,8 @@
-{% extends "base.html" %}
+{% extends "CS361WebApp/base.html" %}
 {% block content %}
     <div class="row">
         <div class="col">
-            <form method="post" action="/">
+            <form method="POST" action="/">
                 {% csrf_token %}
                 <div id="form-control" class="card" style="width: 18rem;">
                     <div class="card-body">

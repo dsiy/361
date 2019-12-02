@@ -1,14 +1,14 @@
-{% extends "base.html" %}
+{% extends "CS361WebApp/base.html" %}
 {% block content %}
     <div class="row">
         <div class="col-md-6">
             <h1>Welcome to TA Scheduler!</h1>
             {% if user.is_authenticated %}
-            <p>Welcome to the TA Scheduling App, please click to schedule!</p>
-            <a href="{% url 'commands' %}"><button class="btn btn-primary">Schedule</button></a>
+            <p>Welcome to the TA Scheduling App, please click to Login!</p>
+            <a href="{% url 'login' %}"><button class="btn btn-primary">Login</button></a>
             {% else %}
             Please login.
-            <form method="post" action="/">
+            <form method="POST" action="/">
                 {% csrf_token %}
                 <button type="submit" class="btn btn-primary">Login</button>
             </form>
