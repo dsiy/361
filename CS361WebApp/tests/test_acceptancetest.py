@@ -284,7 +284,8 @@ class AcceptanceTests(TestCase):
         x = a.assignTA()
         self.assertTrue(app.command(x), "TA assigned.")
 
-    # Tests for viewing the class list
+        # Tests for viewing the class list
+
     def test_view_classlist1(self):
         # Test 1
         # Given administrative access, the user can assign TAs to assign courses.
@@ -336,3 +337,4 @@ class AcceptanceTests(TestCase):
         self.assertEqual(app.command(ac2), "Class already exists and was not added!")
         x = a.viewClassList()
         self.assertEqual(app.command(x), "CS361 802 1400 1600 Rock\nCS395 801 1200 1300 Cheng\n")
+
