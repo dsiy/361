@@ -1,5 +1,5 @@
 body {
-    font-family: "Exo", sans-serif;
+    font-family: 'Source Sans Pro', sans-serif;
     color: #fff;
     background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
     background-size: 400% 400%;
@@ -27,6 +27,7 @@ body {
 
 h1 {
     font-weight: 300;
+    font-size: 60px;
 }
 
 h3 {
@@ -39,6 +40,10 @@ h5 {
     font-weight:300;
 }
 
+p {
+    font-size: 20px;
+}
+
 a,
 a:hover {
     text-decoration: none;
@@ -47,4 +52,6 @@ a:hover {
 
 button {
     box-shadow: 2px 2px 5px black;
+    padding: 50px 50px;
+    font-size: 50px;
 }
