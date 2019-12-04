@@ -8,7 +8,14 @@
                     <div class="card-body">
                         <h5 class="card-title">Class List!</h5>
                         {% for class in courses %}
-                            <br>{{class}}
+                            {{ class.department }}
+                            {{ class.number }}
+                            {{ class.section }}
+                            {{ class.day }}
+                            {{ class.start }}
+                            {{ class.end }}
+                            {{ class.instructor }}
+                            <br/>
                         {% endfor %}
                     </div>
                 </div>
