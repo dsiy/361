@@ -11,7 +11,33 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="{% static 'TAManager/main.css' %}">
     {% block stylesheet %}{% endblock stylesheet %}
-
+    {% if user.is_authenticated %}
+    <nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
+        <div class="container">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle"
+                    aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarToggle">
+                <div class="navbar-nav mr-auto">
+                    {% if user.is_authenticated %}
+                    <a class="nav-item nav-link" href="{% url 'CS361WebApp-home' %}">Home</a>
+                    <a class="nav-item nav-link" href="{% url 'CS361WebApp-classList' %}">ClassList</a>
+                    {% if user.is_staff %}
+                    <a class="nav-item nav-link" href="{% url 'register' %}">Create Account</a>
+                    <a class="nav-item nav-link" href="{% url 'CS361WebApp-coursetime' %}">Create Class</a>
+                    {% endif %}
+                    {% endif %}
+                </div>
+                <div class="navbar-nav">
+                    {% if user.is_authenticated %}
+                    <a class="nav-item nav-link" href="{% url 'logout' %}">Logout</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </nav>
+    {% endif %}
     <title>TA Manager</title>
 </head>
 <body>
