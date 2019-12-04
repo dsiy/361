@@ -1,17 +1,6 @@
-body {
-background: #fceabb;  /* fallback for old browsers */
-background: -webkit-linear-gradient(to right, #f8b500, #fceabb);  /* Chrome 10-25, Safari 5.1-6 */
-background: linear-gradient(to right, #f8b500, #fceabb); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-
-}
-
-#form-control {
-    display: block;
-    border-radius: 10px;
-    text-align: center;
-    margin: 30vh auto;
-    box-sizing: content-box;
-    box-shadow: 0px 5px 0px;
-    font-family: Roboto, sans-serif;
-    font-weight: bold;
+html, body {
+    height: 100%;
+    width: 100%;
+    min-height: 100%;
+    min-width: 100%;
 }

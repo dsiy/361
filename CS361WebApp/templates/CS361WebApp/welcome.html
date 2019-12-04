@@ -1,11 +1,45 @@
 {% extends "CS361WebApp/base.html" %}
+{% block stylesheet %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'TAManager/welcome.css' %}">
+{% endblock stylesheet %}
 {% block content %}
-    <div class="row">
-        <div class="col-md-6">
+<!--<nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
+    <div class="container">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle"
+                aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarToggle">
+            <div class="navbar-nav mr-auto">
+                {% if user.is_authenticated %}
+                <a class="nav-item nav-link" href="{% url 'CS361WebApp-home' %}">Home</a>
+                <a class="nav-item nav-link" href="{% url 'CS361WebApp-classList' %}">ClassList</a>
+                {% if user.is_staff %}
+                <a class="nav-item nav-link" href="{% url 'register' %}">Create Account</a>
+                <a class="nav-item nav-link" href="{% url 'CS361WebApp-coursetime' %}">Create Class</a>
+                {% endif %}
+                {% endif %}
+            </div>
+             Navbar Right Side
+            <div class="navbar-nav">
+                {% if user.is_authenticated %}
+                <a class="nav-item nav-link" href="{% url 'logout' %}">Logout</a>
+                {% else %}
+                <a class="nav-item nav-link" href="{% url 'login' %}">Login</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</nav>-->
+    <div class="row h-100 align-items-center">
+        <div class="col v-100 justify-content-center" style="text-align: center">
             <h1>Welcome to TA Scheduler!</h1>
             {% if user.is_authenticated %}
             <p>Welcome to the TA Scheduling App, please click to Login!</p>
-            <a href="{% url 'login' %}"><button class="btn btn-primary">Login</button></a>
+            <a href="{% url 'login' %}">
+                <button class="btn btn-primary">Login</button>
+            </a>
             {% else %}
             Please login.
             <form method="POST" action="/">
