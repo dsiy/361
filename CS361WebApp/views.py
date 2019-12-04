@@ -5,6 +5,7 @@ from CS361WebApp.models import CourseTime
 from django.contrib.auth.decorators import login_required, user_passes_test
 from CS361WebApp.forms import CourseTimeForm
 
+
 def admin_check(user):
     return user.is_staff
 
@@ -13,6 +14,7 @@ def admin_check(user):
 def home(request):
     course_result = CourseTime.objects.all()
     return render(request, 'CS361WebApp/home.html', {"courses": course_result})
+
 
 @login_required
 @user_passes_test(admin_check)
@@ -37,6 +39,12 @@ def coursetime(request):
     else:
         form = CourseTimeForm()
     return render(request, 'CS361WebApp/CourseTime.html', {'form': form})
+
+
+@login_required()
+def classlist(request):
+    form = CourseTime.objects.all()
+    return render(request, 'CS361WebApp/ClassList.html', {'form': form})
 
 
 def welcome(request):
