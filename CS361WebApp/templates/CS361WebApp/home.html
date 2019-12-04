@@ -1,7 +1,11 @@
 {% extends "CS361WebApp/base.html" %}
+{% load static %}
+{% block stylesheet %}
+<link rel="stylesheet" type="text/css" href="{% static 'TAManager/home.css' %}">
+{% endblock stylesheet %}
 {% block content %}
-    <div class="row">
-        <div class="col">
+    <div class="row h-100 align-content-center">
+        <div class="col-md-12">
             <form method="POST" action="/">
                 {% csrf_token %}
                 <div id="form-control" class="card" style="width: 18rem;">
