@@ -7,16 +7,19 @@
                 <div id="form-control" class="card" style="width: 18rem;">
                     <div class="card-body">
                         <h5 class="card-title">Class List!</h5>
-                        {% for class in courses %}
-                            {{ class.department }}
-                            {{ class.number }}
-                            {{ class.section }}
-                            {{ class.day }}
-                            {{ class.start }}
-                            {{ class.end }}
-                            {{ class.instructor }}
+                            <ul>
+                            {% for class in courses %}
+                                <li>{{ class.department }}
+                                {{ class.number }}
+                                {{ class.section }}
+                                {{ class.day }}
+                                {{ class.start }}
+                                {{ class.end }}
+                                {{ class.instructor }}
+                                </li>
                             <br/>
-                        {% endfor %}
+                            {% endfor %}
+                            </ul>
                     </div>
                 </div>
             </form>
