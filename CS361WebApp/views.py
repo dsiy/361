@@ -3,7 +3,7 @@ from django.views import View
 from django.contrib import auth, messages
 from CS361WebApp.models import CourseTime
 from django.contrib.auth.decorators import login_required, user_passes_test
-from CS361WebApp.forms import CourseTimeForm
+from CS361WebApp.forms import CourseTimeForm, AssignUserForm
 
 
 def admin_check(user):
@@ -43,7 +43,7 @@ def coursetime(request):
 
 @login_required()
 def assign(request):
-    form = CourseTimeForm()
+    form = AssignUserForm()
     return render(request, 'CS361WebApp/assign.html', {'form': form})
 
 
