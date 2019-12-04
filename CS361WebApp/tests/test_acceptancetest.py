@@ -1,5 +1,5 @@
 from django.test import TestCase
-from CS361WebApp.models import Account, Administrator, TA, Instructor, InputManager, CourseTime
+from CS361WebApp.models import User, CourseTime
 
 app = InputManager()
 
@@ -7,10 +7,10 @@ app = InputManager()
 class AcceptanceTests(TestCase):
     # 1 admin login
     def test_isAdmin(self):
-        # given a person logs in with admin account, i.e. boyland.uwm.edu
-        # if not boyland's account, will return false
+        # given a person logs in with admin User, i.e. boyland.uwm.edu
+        # if not boyland's User, will return false
         Administrator.objects.create(email="boyland.uwm.edu", password="Unbr3akable!")
-        Account.objects.create(email="dssiy@uwm.edu", password="P4ssw0rd!")
+        User.objects.create(email="dssiy@uwm.edu", password="P4ssw0rd!")
         a = "login boyland.uwm.edu password Unbr3akable!"
         b = "login other.uwm.edu password P4ssw0rd!"
         self.assertEqual(app.command(a), "true")
@@ -20,7 +20,7 @@ class AcceptanceTests(TestCase):
         # have a list of permissions that are switched off.
         # if user is admin, then turn on permissions
         Administrator.objects.create(email="boyland.uwm.edu", password="Unbr3akable!")
-        Account.objects.create(email="dssiy@uwm.edu", password="P4ssw0rd!")
+        User.objects.create(email="dssiy@uwm.edu", password="P4ssw0rd!")
         a = "login boyland@uwm.edu Unbr3akable!"
         b = "login other@uwm.edu P4ssw0rd!"
         self.assertEqual(app.command(a), "true")
@@ -30,7 +30,7 @@ class AcceptanceTests(TestCase):
         # given the permissions of the user, the user will show list of commands.
         # if user is admin, show full list. If not, show restricted list
         Administrator.objects.create(email="boyland.uwm.edu", password="Unbr3akable!")
-        Account.objects.create(email="dssiy@uwm.edu", password="P4ssw0rd!")
+        User.objects.create(email="dssiy@uwm.edu", password="P4ssw0rd!")
         a = "permission admin"
         b = "permission user"
         self.assertEqual(app.command(a), "Full List")
@@ -42,14 +42,14 @@ class AcceptanceTests(TestCase):
         # Login
         # Enter Username:
         # Enter Password:
-        Account.objects.create(email="hojin@uwm.edu", password="haha")
+        User.objects.create(email="hojin@uwm.edu", password="haha")
         a = "login hojin@uwm.edu haha"
         self.assertEqual(app.command(a), "Log-in Success!")
         # Not sure if this is the correct format for assertion test but I think this is what we should be checking
 
     # 2 Admin login failure
     def test_Login(self):
-        # user will type in the command "Login" when they don't have an account
+        # user will type in the command "Login" when they don't have an User
         # Login
         # Enter Username:
         # Enter Password:
@@ -63,7 +63,7 @@ class AcceptanceTests(TestCase):
         # Enter Username:
         # Enter Password:
         # Enter login again when they are already logged in
-        Account.objects.create(email="hojin@uwm.edu", password="haha")
+        User.objects.create(email="hojin@uwm.edu", password="haha")
         a = "login hojin@uwm.edu haha"
         self.assertEqual(app.command(a), "Log-in Success!")
         self.assertEqual(app.command(a), "You are already logged in!")
@@ -74,7 +74,7 @@ class AcceptanceTests(TestCase):
         # Login
         # Enter Username:
         # Enter Incorrect Password:
-        Account.objects.create(email="hojin@uwm.edu", password="haha")
+        User.objects.create(email="hojin@uwm.edu", password="haha")
         a = "login hojin@uwm.edu yeet"
         self.assertEqual(app.command(a), "Your password is incorrect!")
 
@@ -83,7 +83,7 @@ class AcceptanceTests(TestCase):
         # Test 1
         # Given that the user (TAs, Administrator, Instructor) presses the logout button
         # If the button is clicked then the user is redirected to the login screen.
-        Account.objects.create(email="hojin@uwm.edu", password="haha")
+        User.objects.create(email="hojin@uwm.edu", password="haha")
         a = "login hojin@uwm.edu haha"
         self.assertEqual(app.command(a), "Log-in Success!")
         a = "logout"
@@ -132,18 +132,18 @@ class AcceptanceTests(TestCase):
         a = "Remove Class 'ClassName, Section' "
         self.assertEqual(app.command(a), "Class Successfully Removed")
 
-    # 4 TA Account creation
-    # setup account database
-    # When admin creates an account
+    # 4 TA User creation
+    # setup User database
+    # When admin creates an User
     def test_createTA(self):
         # Test 1
         # setup empty database
         a = TA.objects.create(email="testemail@yahoo.com", password="Test34!")
-        self.assertEqual(app.command(a), "TA account created")
+        self.assertEqual(app.command(a), "TA User created")
 
-    def test_createAccountUnique(self):
+    def test_createUserUnique(self):
         # Test 2
-        # setup with just boyland admin account
+        # setup with just boyland admin User
         a = Administrator.objects.create(email="boyland@uwm.edu", password="Unbr3akable!")
         self.assertFalse(app.command(a))
 
@@ -205,7 +205,7 @@ class AcceptanceTests(TestCase):
         self.assertEqual(app.command(a), "Password successfully added.")
 
     # 8 Password Reset System
-    # User will get a temporary password when account is created, and can change password on first login.
+    # User will get a temporary password when User is created, and can change password on first login.
     # Any further password resets handled by administrator.
     def test_send_tempPW(self):
         # Test 1

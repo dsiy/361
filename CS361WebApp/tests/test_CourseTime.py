@@ -1,6 +1,6 @@
 
 from django.test import TestCase
-from CS361WebApp.models import Account, Administrator, TA, Instructor, CourseTime, CourseTimeValidator
+from CS361WebApp.models import User, CourseTime, CourseTimeValidator
 
 
 class CourseTimeTest(TestCase):
@@ -82,30 +82,30 @@ class CourseTimeTest(TestCase):
         self.assertTrue(time.objects.isOverlap(time2), False)
         self.assertTrue(time2.objects.isOverlap(time), False)
 
-    def test_account_login1(self):
-        Account.objects.create(email="boyland@uwm.edu", password="unbreakable")
-        boyland = Account.objects.get(email="boyland@uwm.edu")
+    def test_User_login1(self):
+        User.objects.create(email="boyland@uwm.edu", password="unbreakable")
+        boyland = User.objects.get(email="boyland@uwm.edu")
         self.assertIs(boyland.Login("unbreakable"), True)
 
-    def test_account_login2(self):
-        Account.objects.create(email="boyland@uwm.edu", password="unbreakable")
-        boyland = Account.objects.get(email="boyland@uwm.edu")
+    def test_User_login2(self):
+        User.objects.create(email="boyland@uwm.edu", password="unbreakable")
+        boyland = User.objects.get(email="boyland@uwm.edu")
         self.assertRaises(boyland.login("wrongPassword"), "InvalidPasswordException")
 
-    def test_account_logout1(self):
-        Account.objects.create(email="boyland@uwm.edu", password="unbreakable")
-        boyland = Account.objects.get(email="boyland@uwm.edu")
+    def test_User_logout1(self):
+        User.objects.create(email="boyland@uwm.edu", password="unbreakable")
+        boyland = User.objects.get(email="boyland@uwm.edu")
         boyland.Login("unbreakable")
         self.assertEqual(boyland.Logout(), True)
 
-    def test_account_logout(self):
-        Account.objects.create(email="boyland@uwm.edu", password="unbreakable")
-        boyland = Account.objects.get(email="boyland@uwm.edu")
+    def test_User_logout(self):
+        User.objects.create(email="boyland@uwm.edu", password="unbreakable")
+        boyland = User.objects.get(email="boyland@uwm.edu")
         self.assertEqual(boyland.Logout(), False)
 
     def test_admin_classList1(self):
-        Account.objects.create(email="boyland@uwm.edu", password="unbreakable")
-        boyland = Account.objects.get(email="boyland@uwm.edu")
+        User.objects.create(email="boyland@uwm.edu", password="unbreakable")
+        boyland = User.objects.get(email="boyland@uwm.edu")
         Administrator.objects.create(email="boyland@uwm.edu", password="unbreakable")
         boylandAdmin = Administrator.objects.get(email="boyland@uwm.edu")
         boylandAdmin.addClass(name="CS361")
