@@ -42,9 +42,9 @@ def coursetime(request):
 
 
 @login_required()
-def classlist(request):
-    form = CourseTime.objects.all()
-    return render(request, 'CS361WebApp/ClassList.html', {'form': form})
+def assign(request):
+    form = CourseTimeForm()
+    return render(request, 'CS361WebApp/assign.html', {'form': form})
 
 
 def welcome(request):
