@@ -4,6 +4,9 @@ from django.contrib.auth.models import User
 
 
 # Create your models here.
+from django.template.defaultfilters import slugify
+
+
 class CourseTime(models.Model):
     department = models.CharField(max_length=50)
     number = models.CharField(max_length=50)
