@@ -18,7 +18,7 @@ class CourseTime(models.Model):
 
 
 class SavePriority(models.Model):
-    myList = models.TextField(null=True)
+    myList = []
 
 
 class CourseTimeValidator:  # takes in string. addClass <1> <2> <3>...<n>

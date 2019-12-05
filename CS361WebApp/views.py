@@ -53,7 +53,7 @@ def assign(request):
 def classlist(request):
     classes = CourseTime.objects.all()
     if request.method == 'POST':
-        form = CourseTimeForm(request.POST)
+        form = PriorityForm(request.POST)
         if form.is_valid():
             department = form.cleaned_data.get('department')
             number = form.cleaned_data.get('number')
@@ -61,11 +61,18 @@ def classlist(request):
             priority = form.cleaned_data.get('priority')
             myModel = SavePriority()
             class1 = classes.filter(department=department).filter(number=number).filter(section=section)
-            if class1 is None:
+            num = class1.count()
+            if num == 0:
                 messages.error(request, f'Class not found!')
                 return redirect('CS361WebApp-classList')
-            listIWantToStore = [1, 2, 3, 4, 5, 'hello']
-            myModel.myList = json.dumps(listIWantToStore)
+            myModel.myList.append(class1)
+            # myJsonList = json.dumps(myModel.myList)
+            # jsonDec = json.decoder.JSONDecoder()
+            # string = str(jsonDec.decode(myJsonList))
+            # listIWantToStore = str(jsonDec.decode(myJsonList))[1:-1].split(',')
+            #
+            # listIWantToStore.append(class1.get(number=number).__str__())
+            # myModel.myList = json.dumps(listIWantToStore)
             myModel.save()
         return redirect('CS361WebApp-classList')
     else:
