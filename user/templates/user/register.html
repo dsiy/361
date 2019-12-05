@@ -6,7 +6,7 @@
 {% endblock stylesheet %}
 {% block content %}
 <div class="row h-100 align-items-center">
-    <div id="form-wrapper">
+<div id="form-wrapper">
         <div class="content-section">
             <form method="POST">
                 {% csrf_token %}
@@ -14,7 +14,7 @@
                     <legend class="border-bottom mb-4">Create Account</legend>
                     {{ form|crispy }}
                 </fieldset>
-                <div class="from-group">
+                <div class="form-group">
                     <button class="btn btn-outline-info" type="submit">Submit</button>
                 </div>
             </form>
