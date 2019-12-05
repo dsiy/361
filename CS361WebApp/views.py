@@ -10,6 +10,7 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 from CS361WebApp.forms import CourseTimeForm, AssignUserForm
 from CS361WebApp.forms import CourseTimeForm, PriorityInit
 import json
+from typing import Any
 
 
 def admin_check(user):
@@ -39,7 +40,7 @@ def coursetime(request):
         section = form.cleaned_data.get('section')
         instructor = form.cleaned_data.get('instructor')
 
-        messages.success(request, f'Account created for {number}!')
+        messages.success(request, f'Course created for {department} {number}!')
         return redirect('CS361WebApp-coursetime')
 
     else:
@@ -47,13 +48,26 @@ def coursetime(request):
     return render(request, 'CS361WebApp/CourseTime.html', {'form': form})
 
 
-@login_required()
+@login_required
 def assign(request):
-    form = AssignUserForm()
+    classes = CourseTime.objects.all()
+    form = AssignUserForm(request.POST)
+    if form.is_valid():
+        department = form.cleaned_data.get('department')
+        number = form.cleaned_data.get('number')
+        section = form.cleaned_data.get('section')
+        instructor = form.cleaned_data.get('instructor')
+        class1 = classes.filter(department=department).filter(number=number).filter(section=section)
+        num = class1.count()
+        if num == 0:
+            messages.error(request, f'Class not found!')
+            return redirect('CS361WebApp-classList')
+        class1.update(instructor = instructor)
+        messages.success(request, f'{instructor} assigned to {department} {number} {section}!')
     return render(request, 'CS361WebApp/assign.html', {'form': form})
 
 
-@login_required()
+@login_required
 def classlist(request):
     classes = CourseTime.objects.all()
     if request.method == 'POST':
@@ -81,7 +95,7 @@ def classlist(request):
 
     return render(request, 'CS361WebApp/ClassList.html', {'classes': classes, 'form': form})
 
-
+@login_required()
 def priority(request):
     classes = SavePriority.objects.all()
     if request.method == 'POST':
