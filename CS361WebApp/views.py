@@ -52,28 +52,23 @@ def assign(request):
 def classlist(request):
     classes = CourseTime.objects.all()
     if request.method == 'POST':
-        form = CourseTimeForm(request.POST)
+        form = PriorityForm(request.POST)
+        if form.is_valid():
+            department = form.cleaned_data['department']
+            number = form.cleaned_data.get('number')
+            section = form.cleaned_data.get('section')
+            priority = form.cleaned_data.get('priority')
 
-        department = form.cleaned_data.get('department')
-        number = form.cleaned_data.get('number')
-        section = form.cleaned_data.get('section')
-        priority = form.cleaned_data.get('priority')
+            class1 = classes.filter(department=department).filter(number=number).filter(section=section)
+            if class1.count() == 0:
+                messages.error(request, f'Class not found!')
+                return redirect('CS361WebApp-classList')
 
-        class1 = classes.filter(department=department).filter(number=number).filter(section=section)
-        if class1 is None:
-            messages.error(request, f'Class not found!')
+            currentuser = request.user
+            currentuser.prior_class = class1
+            currentuser.save()
+
             return redirect('CS361WebApp-classList')
-
-        myModel = Profile()
-
-        jsonDec = json.decoder.JSONDecoder()
-        myPythonList = jsonDec.decode(myModel.myList)
-
-        listIWantToStore = myPythonList.append(class1)
-        myModel.myList = json.dumps(listIWantToStore)
-        myModel.save()
-
-        return redirect('CS361WebApp-classList')
     else:
         form = PriorityForm()
     return render(request, 'CS361WebApp/ClassList.html', {'classes': classes, 'form': form})

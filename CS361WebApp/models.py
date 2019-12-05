@@ -16,8 +16,10 @@ class Profile(models.Model):
         (ADMINISTRATOR, 'Administrator'),
     )
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    myList = models.TextField(null=True)
     role = models.PositiveSmallIntegerField(choices=ROLE_CHOICES, null=True, blank=True)
+
+    def __str__(self):  # __unicode__ for Python 2
+        return self.user.username
 
 
 @receiver(post_save, sender=User)
@@ -25,10 +27,6 @@ def create_or_update_user_profile(sender, instance, created, **kwargs):
     if created:
         Profile.objects.create(user=instance)
     instance.profile.save()
-
-
-class PriorityList(User):
-    myList = models.TextField(null=True)
 
 
 class CourseTime(models.Model):
@@ -41,7 +39,14 @@ class CourseTime(models.Model):
     instructor = models.CharField(max_length=50, blank=True)
 
     def __str__(self):
-        return self.department + " " + self.number
+        return "%s %s %s" % (self.department, self.number, self.section)
+
+    class Meta:
+        ordering = ['department', 'number', 'section']
+
+
+class PriorityList(User):
+    prior_class = models.ForeignKey(CourseTime, on_delete=models.CASCADE)
 
 
 class CourseTimeValidator:  # takes in string. addClass <1> <2> <3>...<n>

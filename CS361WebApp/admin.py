@@ -1,11 +1,13 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.models import User
-from .models import CourseTime, Profile
+from .models import CourseTime, Profile, PriorityList
 
 # Register your models here.
 admin.site.register(CourseTime)
+admin.site.register(PriorityList)
 
+# this is for user tag
 class ProfileInline(admin.StackedInline):
     model = Profile
     can_delete = False

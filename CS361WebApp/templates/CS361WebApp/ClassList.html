@@ -1,0 +1,36 @@
+{% extends "CS361WebApp/base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+    <div class="row">
+        <div class="col">
+            <h5 class="card-title">Class List</h5>
+            {% for class in classes %}
+                {{ class.department }}
+                {{ class.number }}
+                {{ class.section }}
+                {{ class.day }}
+                {{ class.start }}
+                {{ class.end }}
+                {{ class.instructor }}
+                <br/>
+            {% endfor %}
+   <div class="content-section">
+         <form method="POST">
+            {% csrf_token %}
+            <fieldset class="form-group">
+                <legend class="border-bottom mb-4">Create Section</legend>
+                {{ form|crispy }}
+            </fieldset>
+            <div class="from-group">
+                <button class="btn btn-outline-info" type="submit">Submit</button>
+            </div>
+        </form>
+        <div class="border-top pt-3">
+            <small class="text-muted">
+{#                Already Have An Account? <a class="ml-2" href="#">Sign In</a>#}
+            </small>
+        </div>
+    </div>
+        </div>
+    </div>
+{% endblock content %}
