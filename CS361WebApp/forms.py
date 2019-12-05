@@ -14,10 +14,6 @@ class AssignUserForm(ModelForm):
         model = models.CourseTime
         fields = ['department', 'number', 'section', 'instructor']
 
-    class Meta:
-        model = models.CourseTime
-        fields = ['department', 'number', 'start', 'end', 'day', 'section', 'instructor']
-
 
 class PriorityInit(ModelForm):
     class Meta:
