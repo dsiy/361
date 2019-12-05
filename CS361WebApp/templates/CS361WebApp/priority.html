@@ -1,0 +1,20 @@
+{% extends "CS361WebApp/base.html" %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block stylesheet %}
+<link rel="stylesheet" type="text/css" href="{% static 'TAManager/course_time.css' %}">
+{% endblock stylesheet %}
+{% block content %}
+    <div class="row">
+        <div class="col">
+            <h5 class="card-title">Class List Priority</h5>
+            {% for class in classes %}
+                {{ class.department }}
+                {{ class.number }}
+                {{ class.section }}
+                {{ class.priority }}
+                <br/>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock content %}
