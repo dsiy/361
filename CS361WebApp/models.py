@@ -1,9 +1,36 @@
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import models
 from django.contrib.auth.models import User
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 
 # Create your models here.
+class Profile(models.Model):
+    TA = 1
+    INSTRUCTOR = 2
+    ADMINISTRATOR = 3
+    ROLE_CHOICES = (
+        (TA, 'TA'),
+        (INSTRUCTOR, 'Instructor'),
+        (ADMINISTRATOR, 'Administrator'),
+    )
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    myList = models.TextField(null=True)
+    role = models.PositiveSmallIntegerField(choices=ROLE_CHOICES, null=True, blank=True)
+
+
+@receiver(post_save, sender=User)
+def create_or_update_user_profile(sender, instance, created, **kwargs):
+    if created:
+        Profile.objects.create(user=instance)
+    instance.profile.save()
+
+
+class PriorityList(User):
+    myList = models.TextField(null=True)
+
+
 class CourseTime(models.Model):
     department = models.CharField(max_length=50)
     number = models.CharField(max_length=50)
@@ -15,10 +42,6 @@ class CourseTime(models.Model):
 
     def __str__(self):
         return self.department + " " + self.number
-
-
-class SavePriority(models.Model):
-    myList = models.TextField(null=True)
 
 
 class CourseTimeValidator:  # takes in string. addClass <1> <2> <3>...<n>
