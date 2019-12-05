@@ -1,9 +1,11 @@
 from django.shortcuts import render, redirect
 from django.views import View
 from django.contrib import auth, messages
-from CS361WebApp.models import CourseTime
+from CS361WebApp.models import CourseTime, SavePriority
 from django.contrib.auth.decorators import login_required, user_passes_test
 from CS361WebApp.forms import CourseTimeForm, AssignUserForm
+from CS361WebApp.forms import CourseTimeForm, PriorityForm
+import json
 
 
 def admin_check(user):
@@ -43,7 +45,7 @@ def coursetime(request):
 
 @login_required()
 def assign(request):
-    form = AssignUserForm()
+    form = CourseTimeForm()
     return render(request, 'CS361WebApp/assign.html', {'form': form})
 
 

@@ -2,7 +2,6 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from .forms import UserRegisterForm
 from django.contrib.auth.decorators import login_required, user_passes_test
-from django.contrib.auth.models import User
 
 
 def admin_check(user):

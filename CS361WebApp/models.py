@@ -11,10 +11,14 @@ class CourseTime(models.Model):
     end = models.CharField(max_length=50)
     day = models.CharField(max_length=50)
     section = models.CharField(max_length=50)
-    instructor = models.CharField(max_length=50, blank = True)
+    instructor = models.CharField(max_length=50, blank=True)
 
     def __str__(self):
         return self.department + " " + self.number
+
+
+class SavePriority(models.Model):
+    myList = models.TextField(null=True)
 
 
 class CourseTimeValidator:  # takes in string. addClass <1> <2> <3>...<n>
