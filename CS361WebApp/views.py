@@ -45,7 +45,7 @@ def coursetime(request):
 
 @login_required()
 def assign(request):
-    form = CourseTimeForm()
+    form = AssignUserForm()
     return render(request, 'CS361WebApp/assign.html', {'form': form})
 
 
