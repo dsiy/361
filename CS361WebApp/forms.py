@@ -21,13 +21,6 @@ class AssignUserForm(ModelForm):
 
 class PriorityInit(ModelForm):
     class Meta:
-        model = models.CourseTime
+        model = models.SavePriority
+        fields = ['department', 'number', 'section', 'priority']
 
-        fields = ['department', 'number', 'section']
-
-
-class PriorityForm(PriorityInit):
-    priority = forms.CharField(label='Priority', max_length=5)
-
-    class Meta(PriorityInit.Meta):
-        fields = PriorityInit.Meta.fields + ['priority']

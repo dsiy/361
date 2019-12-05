@@ -1,10 +1,14 @@
+import operator
+from functools import reduce
+
+from django.db.models import Q
 from django.shortcuts import render, redirect
 from django.views import View
 from django.contrib import auth, messages
 from CS361WebApp.models import CourseTime, SavePriority
 from django.contrib.auth.decorators import login_required, user_passes_test
 from CS361WebApp.forms import CourseTimeForm, AssignUserForm
-from CS361WebApp.forms import CourseTimeForm, PriorityForm
+from CS361WebApp.forms import CourseTimeForm, PriorityInit
 import json
 
 
@@ -53,8 +57,9 @@ def assign(request):
 def classlist(request):
     classes = CourseTime.objects.all()
     if request.method == 'POST':
-        form = PriorityForm(request.POST)
+        form = PriorityInit(request.POST)
         if form.is_valid():
+            form.save()
             department = form.cleaned_data.get('department')
             number = form.cleaned_data.get('number')
             section = form.cleaned_data.get('section')
@@ -64,20 +69,24 @@ def classlist(request):
             num = class1.count()
             if num == 0:
                 messages.error(request, f'Class not found!')
+                SavePriority.objects.filter(department=department).filter(number=number).filter(section=section).delete()
                 return redirect('CS361WebApp-classList')
-            myModel.myList.append(class1)
-            # myJsonList = json.dumps(myModel.myList)
-            # jsonDec = json.decoder.JSONDecoder()
-            # string = str(jsonDec.decode(myJsonList))
-            # listIWantToStore = str(jsonDec.decode(myJsonList))[1:-1].split(',')
-            #
-            # listIWantToStore.append(class1.get(number=number).__str__())
-            # myModel.myList = json.dumps(listIWantToStore)
-            myModel.save()
-        return redirect('CS361WebApp-classList')
+            # myModel.myList.insert(int(priority), class1)
+            messages.success(request, f'{number} added as priority {priority}!')
+        # return redirect('CS361WebApp-classList')
+        form = PriorityInit()
+        return render(request, 'CS361WebApp/ClassList.html', {'classes': classes, 'form': form})
     else:
-        form = PriorityForm()
+        form = PriorityInit()
+
     return render(request, 'CS361WebApp/ClassList.html', {'classes': classes, 'form': form})
+
+
+def priority(request):
+    classes = SavePriority.objects.all()
+    if request.method == 'POST':
+        return redirect('CS361WebApp-priority')
+    return render(request, "CS361WebApp/priority.html", {'classes': classes})
 
 
 def welcome(request):

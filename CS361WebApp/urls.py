@@ -7,4 +7,5 @@ urlpatterns = [
     path('coursetime/', views.coursetime, name='CS361WebApp-coursetime'),
     path('assign/', views.assign, name='CS361WebApp-assign'),
     path('classList/', views.classlist, name='CS361WebApp-classList'),
+    path('priority/', views.priority, name='CS361WebApp-priority'),
 ]
