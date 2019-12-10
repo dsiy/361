@@ -2,19 +2,23 @@
 {% load crispy_forms_tags %}
 {% load static %}
 {% block stylesheet %}
-<link rel="stylesheet" type="text/css" href="{% static 'TAManager/course_time.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'TAManager/priority.css' %}">
 {% endblock stylesheet %}
 {% block content %}
-    <div class="row">
-        <div class="col">
-            <h5 class="card-title">Class List Priority</h5>
-            {% for class in classes %}
-                {{ class.department }}
-                {{ class.number }}
-                {{ class.section }}
-                {{ class.priority }}
-                <br/>
-            {% endfor %}
+    <div class="row h-100 align-items-center">
+        <div id="wrapper">
+            <h5>Class List Priority</h5>
+            <ul class="list-group">
+                {% for class in classes %}
+                    <li class="list-group-item">
+                        {{ class.department }}
+                        {{ class.number }}
+                        {{ class.section }}
+                        {{ class.priority }}
+                    <li class="list-group-item">
+                    <br/>
+                {% endfor %}
+            </ul>
         </div>
     </div>
 {% endblock content %}

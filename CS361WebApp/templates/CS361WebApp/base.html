@@ -11,7 +11,7 @@
     {% block stylesheet %}{% endblock stylesheet %}
     {% if user.is_authenticated %}
         <div class="container-fluid">
-            <nav class="navbar navbar-expand-md navbar-dark bg-steel Sticky-top" style="margin-bottom: 20px">
+            <nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top" style="margin-bottom: 20px">
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle"
                         aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -50,6 +50,7 @@
         {% endfor %}
     {% endif %}
     {% block content %}{% endblock content %}
+    <footer class="fixed-bottom">Copyright &copy; 2019 We Don't Like Krique. All Rights Reserved.</footer>
 </div>
 </body>
 </html>
