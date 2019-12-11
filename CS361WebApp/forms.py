@@ -15,8 +15,20 @@ class AssignUserForm(ModelForm):
         fields = ['department', 'number', 'section', 'instructor']
 
 
-class PriorityInit(ModelForm):
+class Priority(ModelForm):
+    class Meta:
+        model = models.CreatePriority
+        fields = ['classes', 'priority']
+
+
+# not sure if i need this
+class PriorityList(ModelForm):
     class Meta:
         model = models.SavePriority
-        fields = ['department', 'number', 'section', 'priority']
-
+        fields = ['myList', 'user']
+#
+# class PriorityInit(ModelForm):
+#     class Meta:
+#         model = models.SavePriority
+#         fields = ['department', 'number', 'section', 'priority']
+#
