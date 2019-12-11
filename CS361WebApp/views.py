@@ -62,7 +62,7 @@ def assign(request):
         if num == 0:
             messages.error(request, f'Class not found!')
             return redirect('CS361WebApp-classList')
-        class1.update(instructor = instructor)
+        class1.update(instructor=instructor)
         messages.success(request, f'{instructor} assigned to {department} {number} {section}!')
     return render(request, 'CS361WebApp/assign.html', {'form': form})
 
@@ -83,7 +83,8 @@ def classlist(request):
             num = class1.count()
             if num == 0:
                 messages.error(request, f'Class not found!')
-                SavePriority.objects.filter(department=department).filter(number=number).filter(section=section).delete()
+                SavePriority.objects.filter(department=department).filter(number=number).filter(
+                    section=section).delete()
                 return redirect('CS361WebApp-classList')
             # myModel.myList.insert(int(priority), class1)
             messages.success(request, f'{number} added as priority {priority}!')
@@ -94,6 +95,7 @@ def classlist(request):
         form = PriorityInit()
 
     return render(request, 'CS361WebApp/ClassList.html', {'classes': classes, 'form': form})
+
 
 @login_required()
 def priority(request):

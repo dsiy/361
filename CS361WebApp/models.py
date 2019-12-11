@@ -25,7 +25,7 @@ class SavePriority(models.Model):
     number = models.CharField(blank=True, max_length=30, editable=True)
     section = models.CharField(blank=True, max_length=30, editable=True)
     priority = models.CharField(blank=True, max_length=20, editable=True)
-    # myList = []
+
 
     def __str__(self):
         return self.department + " " + self.number
