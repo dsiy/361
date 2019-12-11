@@ -1,15 +1,14 @@
 import operator
 from functools import reduce
 
-from django.contrib.auth.models import User
 from django.db.models import Q
 from django.shortcuts import render, redirect
 from django.views import View
 from django.contrib import auth, messages
-from CS361WebApp.models import CourseTime, SavePriority, CreatePriority
+from CS361WebApp.models import CourseTime, SavePriority
 from django.contrib.auth.decorators import login_required, user_passes_test
-from CS361WebApp.forms import CourseTimeForm, AssignUserForm, PriorityList, Priority
-# from CS361WebApp.forms import CourseTimeForm, PriorityInit
+from CS361WebApp.forms import CourseTimeForm, AssignUserForm
+from CS361WebApp.forms import CourseTimeForm, PriorityInit
 import json
 from typing import Any
 
@@ -30,6 +29,7 @@ def coursetime(request):
     if request.method == 'POST':
         form = CourseTimeForm(request.POST)
         # need to put is_valid here
+
         form.save()
 
         department = form.cleaned_data.get('department')
@@ -62,7 +62,7 @@ def assign(request):
         if num == 0:
             messages.error(request, f'Class not found!')
             return redirect('CS361WebApp-classList')
-        class1.update(instructor=instructor)
+        class1.update(instructor = instructor)
         messages.success(request, f'{instructor} assigned to {department} {number} {section}!')
     return render(request, 'CS361WebApp/assign.html', {'form': form})
 
@@ -71,35 +71,33 @@ def assign(request):
 def classlist(request):
     classes = CourseTime.objects.all()
     if request.method == 'POST':
-        form = Priority(request.POST)
-
+        form = PriorityInit(request.POST)
         if form.is_valid():
-            tas = SavePriority.objects.all()
-            name = request.user
-            found = SavePriority.objects.filter(user=name).first()
-            if found is None:
-                useradd = SavePriority.objects.create(user=name)
-            else:
-                useradd = SavePriority.objects.filter(user=name).first()
             form.save()
-            course = form.cleaned_data.get('classes')
+            department = form.cleaned_data.get('department')
+            number = form.cleaned_data.get('number')
+            section = form.cleaned_data.get('section')
             priority = form.cleaned_data.get('priority')
-            add = CreatePriority.objects.filter(classes=course).filter(priority=priority).first()
-            useradd.myList.add(add)
-            messages.success(request, f'{course} assigned to {name} with priority {priority}!')
+            myModel = SavePriority()
+            class1 = classes.filter(department=department).filter(number=number).filter(section=section)
+            num = class1.count()
+            if num == 0:
+                messages.error(request, f'Class not found!')
+                SavePriority.objects.filter(department=department).filter(number=number).filter(section=section).delete()
+                return redirect('CS361WebApp-classList')
+            # myModel.myList.insert(int(priority), class1)
+            messages.success(request, f'{number} added as priority {priority}!')
+        # return redirect('CS361WebApp-classList')
+        form = PriorityInit()
         return render(request, 'CS361WebApp/ClassList.html', {'classes': classes, 'form': form})
     else:
+        form = PriorityInit()
 
-        form = Priority(request.POST)
     return render(request, 'CS361WebApp/ClassList.html', {'classes': classes, 'form': form})
-
 
 @login_required()
 def priority(request):
-    profile = SavePriority.objects.filter(user=request.user)
-    # classes = SavePriority.myList
-    # classes = profile.
-    classes = CourseTime.objects.all()
+    classes = SavePriority.objects.all()
     if request.method == 'POST':
         return redirect('CS361WebApp-priority')
     return render(request, "CS361WebApp/priority.html", {'classes': classes})

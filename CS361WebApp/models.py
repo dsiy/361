@@ -2,6 +2,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.db import models
 from django.contrib.auth.models import User
 
+
 # Create your models here.
 from django.template.defaultfilters import slugify
 
@@ -19,21 +20,15 @@ class CourseTime(models.Model):
         return self.department + " " + self.number
 
 
-class CreatePriority(models.Model):
-    classes = models.ForeignKey('CourseTime', on_delete=models.CASCADE, null=True)
-    priority = models.CharField(max_length=20, blank=True, null=True)
+class SavePriority(models.Model):
+    department = models.CharField(max_length=30)
+    number = models.CharField(blank=True, max_length=30, editable=True)
+    section = models.CharField(blank=True, max_length=30, editable=True)
+    priority = models.CharField(blank=True, max_length=20, editable=True)
+    # myList = []
 
     def __str__(self):
-        return self.classes.department + " " + self.classes.number + " " + self.priority
-
-
-class SavePriority(models.Model):
-    user = models.CharField(max_length=30, null=True, blank=True)
-    # department = models.CharField(max_length=30, blank=True)
-    # number = models.CharField(blank=True, max_length=30, editable=True)
-    # section = models.CharField(blank=True, max_length=30, editable=True)
-
-    myList = models.ManyToManyField(CreatePriority)
+        return self.department + " " + self.number
 
 
 class CourseTimeValidator:  # takes in string. addClass <1> <2> <3>...<n>
