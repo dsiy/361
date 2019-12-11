@@ -1,29 +1,26 @@
 {% extends "CS361WebApp/base.html" %}
 {% load static %}
 {% block stylesheet %}
-<link rel="stylesheet" type="text/css" href="{% static 'TAManager/home.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'TAManager/home.css' %}">
 {% endblock stylesheet %}
 {% block content %}
-<div class="row h-100 align-items-center">
-    <div id="wrapper">
-        <form method="POST" action="/">
-            {% csrf_token %}
-            <h5><b>Class List</b></h5>
-            <br>
-            <ul>
+    <div class="row h-100 align-items-center">
+        <div id="wrapper">
+            <form method="POST" action="/">
+                {% csrf_token %}
+                <h5><b>Your Class List</b></h5>
+                <hr>
+                <br>
                 {% for class in courses %}
-                <li>{{ class.department }}
-                    {{ class.number }}
-                    {{ class.section }}
-                    {{ class.day }}
-                    {{ class.start }}
-                    {{ class.end }}
-                    {{ class.instructor }}
-                </li>
-                <br/>
+                    Department: {{ class.department }}<br>
+                    Number: {{ class.number }}<br>
+                    Section: {{ class.section }}<br>
+                    Day: {{ class.day }}<br>
+                    Start Time: {{ class.start }}<br>
+                    End Time: {{ class.end }}<br>
+                    Instructor: {{ class.instructor }}
                 {% endfor %}
-            </ul>
-        </form>
+            </form>
+        </div>
     </div>
-</div>
 {% endblock content %}
