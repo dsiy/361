@@ -97,11 +97,9 @@ def classlist(request):
 @login_required()
 def priority(request):
     profile = SavePriority.objects.filter(user=request.user)
-    classes = SavePriority.myList
-    classes = profile.
     if request.method == 'POST':
         return redirect('CS361WebApp-priority')
-    return render(request, "CS361WebApp/priority.html", {'classes': classes})
+    return render(request, "CS361WebApp/priority.html", {'classes': profile})
 
 
 def welcome(request):

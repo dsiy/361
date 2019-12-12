@@ -2,7 +2,6 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.db import models
 from django.contrib.auth.models import User
 
-
 # Create your models here.
 from django.template.defaultfilters import slugify
 
@@ -34,7 +33,17 @@ class SavePriority(models.Model):
     # number = models.CharField(blank=True, max_length=30, editable=True)
     # section = models.CharField(blank=True, max_length=30, editable=True)
 
-    myList = models.ManyToManyField(CreatePriority)
+    myList = models.ManyToManyField('CreatePriority')
+
+    class Meta:
+        ordering = ['user']
+
+    def __str__(self):
+        x = self.myList.all()
+        string = ""
+        for values in x:
+            string = string + str(values) + " "
+        return string
 
 
 class CourseTimeValidator:  # takes in string. addClass <1> <2> <3>...<n>
