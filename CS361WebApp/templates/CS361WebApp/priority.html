@@ -5,14 +5,17 @@
 <link rel="stylesheet" type="text/css" href="{% static 'TAManager/course_time.css' %}">
 {% endblock stylesheet %}
 {% block content %}
-    <div class="row">
-        <div class="col">
-            <h5 class="card-title">Class List Priority</h5>
+{#    <div class="row">#}
+{#        <div class="col">#}
+    <div class="row h-100 align-items-center">
+        <div id="form-wrapper">
+            <h5 class="card-title"><b>Class List Priority</b></h5>
+            <hr>
+            <ol>
             {% for class in classes %}
-                {{ class }}
-                <br/>
+                <li>Class: {{ class }}<br></li>
             {% endfor %}
-                <br/>
+            </ol>
         </div>
     </div>
 {% endblock content %}

@@ -10,8 +10,10 @@
                 {% csrf_token %}
                 <h5><b>Your Class List</b></h5>
                 <hr>
-                <br>
+                <ul>
                 {% for class in courses %}
+                    <br>
+                    <li>
                     Department: {{ class.department }}<br>
                     Number: {{ class.number }}<br>
                     Section: {{ class.section }}<br>
@@ -19,7 +21,9 @@
                     Start Time: {{ class.start }}<br>
                     End Time: {{ class.end }}<br>
                     Instructor: {{ class.instructor }}
+                    </li>
                 {% endfor %}
+                </ul>
             </form>
         </div>
     </div>
