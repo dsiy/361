@@ -4,27 +4,25 @@
     <link rel="stylesheet" type="text/css" href="{% static 'TAManager/home.css' %}">
 {% endblock stylesheet %}
 {% block content %}
-    <div class="row h-100 align-items-center">
-        <div id="wrapper">
-            <form method="POST" action="/">
-                {% csrf_token %}
-                <h5><b>Your Class List</b></h5>
-                <hr>
-                <ul>
+    <div class="card">
+        <div class="card-body">
+            <div class="card-title">Your Class List</div>
+            <hr>
+            <div class="card-deck">
                 {% for class in courses %}
-                    <br>
-                    <li>
-                    Department: {{ class.department }}<br>
-                    Number: {{ class.number }}<br>
-                    Section: {{ class.section }}<br>
-                    Day: {{ class.day }}<br>
-                    Start Time: {{ class.start }}<br>
-                    End Time: {{ class.end }}<br>
-                    Instructor: {{ class.instructor }}
-                    </li>
+                    <div class="card">
+                        <li>
+                            Department: {{ class.department }}<br>
+                            Number: {{ class.number }}<br>
+                            Section: {{ class.section }}<br>
+                            Day: {{ class.day }}<br>
+                            Start Time: {{ class.start }}<br>
+                            End Time: {{ class.end }}<br>
+                            Instructor: {{ class.instructor }}
+                        </li>
+                    </div>
                 {% endfor %}
-                </ul>
-            </form>
+            </div>
         </div>
     </div>
 {% endblock content %}

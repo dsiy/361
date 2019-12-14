@@ -5,11 +5,8 @@
 <link rel="stylesheet" type="text/css" href="{% static 'TAManager/course_time.css' %}">
 {% endblock stylesheet %}
 {% block content %}
-    <div class="row">
-        <div class="col">
-            <div style="width: 100%; display: table;">
-                <div style="display: table-row">
-                    <div style="width: 600px; display: table-cell;">
+    <div class="card">
+    <div class="card-body">
                         <h5 class="card-title">Class List</h5>
                         {% for class in classes %}
                             {{ class.department }}
@@ -21,7 +18,6 @@
                             {{ class.instructor }}
                             <br/>
                         {% endfor %}
-                    </div>
                     <div style="display: table-cell;">
                         <h5 class="card-title">Priority Class List</h5>
                             {% for class in x %}
@@ -29,8 +25,6 @@
                                 <br/>
                             {% endfor %}
                     </div>
-                </div>
-            </div>
            <div class="content-section">
                  <form method="POST">
                     {% csrf_token %}
@@ -49,7 +43,7 @@
         {#                Already Have An Account? <a class="ml-2" href="#">Sign In</a>#}
                     </small>
                 </div>
-            </div>
-        </div>
+           </div>
+    </div>
     </div>
 {% endblock content %}
