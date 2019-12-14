@@ -5,9 +5,7 @@
 <link rel="stylesheet" type="text/css" href="{% static 'TAManager/course_time.css' %}">
 {% endblock stylesheet %}
 {% block content %}
-<div class="row h-100 align-items-center">
-    <div id="form-wrapper">
-        <div class="content-section">
+<div class="row h-100">
             <form method="POST">
                 {% csrf_token %}
                 <fieldset class="form-group">
@@ -23,7 +21,5 @@
                     {# Already Have An Account? <a class="ml-2" href="#">Sign In</a>#}
                 </small>
             </div>
-        </div>
-    </div>
 </div>
 {% endblock content %}
