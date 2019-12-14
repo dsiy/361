@@ -1,18 +1,19 @@
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import models
 from django.contrib.auth.models import User
+from CS361WebApp.validator import *
 
 # Create your models here.
 from django.template.defaultfilters import slugify
 
 
 class CourseTime(models.Model):
-    department = models.CharField(max_length=50)
-    number = models.CharField(max_length=50)
-    start = models.CharField(max_length=50)
-    end = models.CharField(max_length=50)
-    day = models.CharField(max_length=50)
-    section = models.CharField(max_length=50)
+    department = models.CharField(max_length=50, validators=[validate_alpha])
+    number = models.CharField(max_length=50, validators=[validate_numeric])
+    start = models.CharField(max_length=50, validators=[validate_numeric])
+    end = models.CharField(max_length=50, validators=[validate_numeric])
+    day = models.CharField(max_length=50, validators=[validate_alpha])
+    section = models.CharField(max_length=50, validators=[validate_numeric])
     instructor = models.CharField(max_length=50, blank=True)
 
     def __str__(self):

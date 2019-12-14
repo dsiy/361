@@ -27,18 +27,18 @@ def coursetime(request):
     if request.method == 'POST':
         form = CourseTimeForm(request.POST)
         # need to put is_valid here
-        form.save()
+        if form.is_valid():
+            form.save()
+            department = form.cleaned_data.get('department')
+            number = form.cleaned_data.get('number')
+            start = form.cleaned_data.get('start')
+            end = form.cleaned_data.get('end')
+            day = form.cleaned_data.get('day')
+            section = form.cleaned_data.get('section')
+            instructor = form.cleaned_data.get('instructor')
 
-        department = form.cleaned_data.get('department')
-        number = form.cleaned_data.get('number')
-        start = form.cleaned_data.get('start')
-        end = form.cleaned_data.get('end')
-        day = form.cleaned_data.get('day')
-        section = form.cleaned_data.get('section')
-        instructor = form.cleaned_data.get('instructor')
-
-        messages.success(request, f'Course created for {department} {number}!')
-        return redirect('CS361WebApp-coursetime')
+            messages.success(request, f'Course created for {department} {number}!')
+            return redirect('CS361WebApp-coursetime')
 
     else:
         form = CourseTimeForm()
