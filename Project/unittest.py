@@ -132,5 +132,6 @@ class CourseTimeTest(unittest.TestCase):
         boylandAdmin.addClass(name="CS361")
         self.assertIs(boylandAdmin.removeClass(name="CS361"), False)
 
+
 if __name__ == '__main__':
     unittest.main()

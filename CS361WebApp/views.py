@@ -9,9 +9,6 @@ from django.contrib import auth, messages
 from CS361WebApp.models import CourseTime, SavePriority, CreatePriority
 from django.contrib.auth.decorators import login_required, user_passes_test
 from CS361WebApp.forms import CourseTimeForm, AssignUserForm, PriorityList, Priority
-# from CS361WebApp.forms import CourseTimeForm, PriorityInit
-import json
-from typing import Any
 
 
 def admin_check(user):
@@ -74,7 +71,7 @@ def classlist(request):
         form = Priority(request.POST)
 
         if form.is_valid():
-            tas = SavePriority.objects.all()
+
             name = request.user
             found = SavePriority.objects.filter(user=name).first()
             if found is None:
@@ -84,9 +81,37 @@ def classlist(request):
             form.save()
             course = form.cleaned_data.get('classes')
             priority = form.cleaned_data.get('priority')
+
             add = CreatePriority.objects.filter(classes=course).filter(priority=priority).first()
-            useradd.myList.add(add)
-            messages.success(request, f'{course} assigned to {name} with priority {priority}!')
+            test = SavePriority.objects.filter(user=name)
+
+            changed1 = 121111105110107
+            changed2 = 121101101116
+            for yeeet in test:
+                x = yeeet.myList.all()
+                for yeet in x:
+                    if yeet.priority == priority:
+                        changed1 = 69 #fuck
+                        joe_mama = yeet
+                    if yeet.classes == course:
+                        changed2 = 420
+                        i_hate_my_life = yeet
+            if changed1 == 69 and changed2 == 420:
+                useradd.myList.remove(joe_mama)
+                useradd.myList.remove(i_hate_my_life)
+                messages.error(request, f'Class replaced!')
+            elif changed1 == 69:
+                useradd.myList.remove(joe_mama)
+                useradd.myList.add(add)
+                messages.error(request, f'Class replaced!')
+            elif changed2 == 420:
+                useradd.myList.remove(i_hate_my_life)
+                useradd.myList.add(add)
+                messages.error(request, f'Class replaced!')
+            else:
+                useradd.myList.add(add)
+                messages.success(request, f'{course} assigned to {name} with priority {priority}!')
+
         return render(request, 'CS361WebApp/ClassList.html', {'classes': classes, 'form': form})
     else:
 
