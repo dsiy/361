@@ -33,7 +33,7 @@ class SavePriority(models.Model):
     # number = models.CharField(blank=True, max_length=30, editable=True)
     # section = models.CharField(blank=True, max_length=30, editable=True)
 
-    myList = models.ManyToManyField('CreatePriority')
+    myList = models.ManyToManyField(CreatePriority)
 
     class Meta:
         ordering = ['user']
