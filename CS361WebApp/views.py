@@ -125,7 +125,7 @@ def classlist(request):
     else:
 
         form = Priority(request.POST)
-    return render(request, 'CS361WebApp/ClassList.html', {'classes': classes, 'x':x, 'form': form})
+    return render(request, 'CS361WebApp/ClassList.html', {'classes': classes, 'x': x, 'form': form})
 
 
 def welcome(request):

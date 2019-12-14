@@ -23,7 +23,7 @@ class CourseTime(models.Model):
 
 class CreatePriority(models.Model):
     classes = models.ForeignKey('CourseTime', on_delete=models.CASCADE, null=True)
-    priority = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(10)])
+    priority = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(9)])
 
     def __str__(self):
         return self.classes.department + " " + self.classes.number + " " + self.priority
