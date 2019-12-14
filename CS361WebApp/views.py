@@ -122,9 +122,13 @@ def classlist(request):
 @login_required()
 def priority(request):
     profile = SavePriority.objects.filter(user=request.user)
+
+    for yeet in profile:
+        x = yeet.myList.order_by('priority')
+
     if request.method == 'POST':
         return redirect('CS361WebApp-priority')
-    return render(request, "CS361WebApp/priority.html", {'classes': profile})
+    return render(request, "CS361WebApp/priority.html", {'classes': x})
 
 
 def welcome(request):
