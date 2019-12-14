@@ -6,12 +6,13 @@
 {% block content %}
     <div class="card">
         <div class="card-body">
-            <div class="card-title">Your Class List</div>
+            <div class="card-title"><h5>Your Class List</h5></div>
             <hr>
             <div class="card-deck">
                 {% for class in courses %}
                     <div class="card">
-                        <li>
+                        <div class="card-body">
+                            <div class="card-text">
                             Department: {{ class.department }}<br>
                             Number: {{ class.number }}<br>
                             Section: {{ class.section }}<br>
@@ -19,7 +20,8 @@
                             Start Time: {{ class.start }}<br>
                             End Time: {{ class.end }}<br>
                             Instructor: {{ class.instructor }}
-                        </li>
+                            </div>
+                        </div>
                     </div>
                 {% endfor %}
             </div>
