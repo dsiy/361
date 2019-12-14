@@ -102,7 +102,7 @@ def priority(request):
     return render(request, "CS361WebApp/priority.html", {'classes': profile})
 
 
-def welcome(request):
+def dashboard(request):
     if request.method == 'POST':
         return redirect('login')
     return render(request, "CS361WebApp/dashboard.html")
