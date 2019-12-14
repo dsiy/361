@@ -101,7 +101,7 @@ def priority(request):
         return redirect('CS361WebApp-priority')
     return render(request, "CS361WebApp/priority.html", {'classes': profile})
 
-
+@login_required()
 def dashboard(request):
     if request.method == 'POST':
         return redirect('login')
