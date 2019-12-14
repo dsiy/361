@@ -1,4 +1,5 @@
 from django.core.exceptions import ObjectDoesNotExist
+from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
 from django.contrib.auth.models import User
 
@@ -21,7 +22,7 @@ class CourseTime(models.Model):
 
 class CreatePriority(models.Model):
     classes = models.ForeignKey('CourseTime', on_delete=models.CASCADE, null=True)
-    priority = models.CharField(max_length=20, blank=True, null=True)
+    priority = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(10)])
 
     def __str__(self):
         return self.classes.department + " " + self.classes.number + " " + self.priority
@@ -29,10 +30,6 @@ class CreatePriority(models.Model):
 
 class SavePriority(models.Model):
     user = models.CharField(max_length=30, null=True, blank=True)
-    # department = models.CharField(max_length=30, blank=True)
-    # number = models.CharField(blank=True, max_length=30, editable=True)
-    # section = models.CharField(blank=True, max_length=30, editable=True)
-
     myList = models.ManyToManyField(CreatePriority)
 
     class Meta:

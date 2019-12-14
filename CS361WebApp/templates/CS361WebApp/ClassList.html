@@ -7,18 +7,30 @@
 {% block content %}
     <div class="row">
         <div class="col">
-            <h5 class="card-title">Class List</h5>
-            {% for class in classes %}
-                {{ class.department }}
-                {{ class.number }}
-                {{ class.section }}
-                {{ class.day }}
-                {{ class.start }}
-                {{ class.end }}
-                {{ class.instructor }}
-                <br/>
-            {% endfor %}
-            <br/>
+            <div style="width: 100%; display: table;">
+                <div style="display: table-row">
+                    <div style="width: 600px; display: table-cell;">
+                        <h5 class="card-title">Class List</h5>
+                        {% for class in classes %}
+                            {{ class.department }}
+                            {{ class.number }}
+                            {{ class.section }}
+                            {{ class.day }}
+                            {{ class.start }}
+                            {{ class.end }}
+                            {{ class.instructor }}
+                            <br/>
+                        {% endfor %}
+                    </div>
+                    <div style="display: table-cell;">
+                        <h5 class="card-title">Priority Class List</h5>
+                            {% for class in x %}
+                                {{class}}
+                                <br/>
+                            {% endfor %}
+                    </div>
+                </div>
+            </div>
            <div class="content-section">
                  <form method="POST">
                     {% csrf_token %}

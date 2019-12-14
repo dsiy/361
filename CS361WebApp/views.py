@@ -67,6 +67,10 @@ def assign(request):
 @login_required
 def classlist(request):
     classes = CourseTime.objects.all()
+    profile = SavePriority.objects.filter(user=request.user)
+    x = profile.all()
+    for yeet in profile:
+        x = yeet.myList.order_by('priority')
     if request.method == 'POST':
         form = Priority(request.POST)
 
@@ -90,7 +94,7 @@ def classlist(request):
             for yeeet in test:
                 x = yeeet.myList.all()
                 for yeet in x:
-                    if yeet.priority == priority:
+                    if int(yeet.priority) == priority:
                         changed1 = 69 #fuck
                         joe_mama = yeet
                     if yeet.classes == course:
@@ -99,6 +103,7 @@ def classlist(request):
             if changed1 == 69 and changed2 == 420:
                 useradd.myList.remove(joe_mama)
                 useradd.myList.remove(i_hate_my_life)
+                useradd.myList.add(add)
                 messages.error(request, f'Class replaced!')
             elif changed1 == 69:
                 useradd.myList.remove(joe_mama)
@@ -112,23 +117,15 @@ def classlist(request):
                 useradd.myList.add(add)
                 messages.success(request, f'{course} assigned to {name} with priority {priority}!')
 
-        return render(request, 'CS361WebApp/ClassList.html', {'classes': classes, 'form': form})
+        profile = SavePriority.objects.filter(user=request.user)
+        x = profile.all()
+        for yeet in profile:
+            x = yeet.myList.order_by('priority')
+        return render(request, 'CS361WebApp/ClassList.html', {'classes': classes, 'x': x, 'form': form})
     else:
 
         form = Priority(request.POST)
-    return render(request, 'CS361WebApp/ClassList.html', {'classes': classes, 'form': form})
-
-
-@login_required()
-def priority(request):
-    profile = SavePriority.objects.filter(user=request.user)
-
-    for yeet in profile:
-        x = yeet.myList.order_by('priority')
-
-    if request.method == 'POST':
-        return redirect('CS361WebApp-priority')
-    return render(request, "CS361WebApp/priority.html", {'classes': x})
+    return render(request, 'CS361WebApp/ClassList.html', {'classes': classes, 'x':x, 'form': form})
 
 
 def welcome(request):
