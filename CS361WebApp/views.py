@@ -105,4 +105,4 @@ def priority(request):
 def welcome(request):
     if request.method == 'POST':
         return redirect('login')
-    return render(request, "CS361WebApp/welcome.html")
+    return render(request, "CS361WebApp/dashboard.html")
