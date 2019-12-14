@@ -47,20 +47,14 @@ def coursetime(request):
 
 @login_required
 def assign(request):
-    classes = CourseTime.objects.all()
     form = AssignUserForm(request.POST)
     if form.is_valid():
-        department = form.cleaned_data.get('department')
-        number = form.cleaned_data.get('number')
-        section = form.cleaned_data.get('section')
+        class1 = form.cleaned_data.get('course')
         instructor = form.cleaned_data.get('instructor')
-        class1 = classes.filter(department=department).filter(number=number).filter(section=section)
-        num = class1.count()
-        if num == 0:
-            messages.error(request, f'Class not found!')
-            return redirect('CS361WebApp-classList')
-        class1.update(instructor=instructor)
-        messages.success(request, f'{instructor} assigned to {department} {number} {section}!')
+        class1.instructor = instructor
+        class1.save()
+        messages.success(request, f'{instructor} assigned to {class1}!')
+        redirect('CS361WebApp-home')
     return render(request, 'CS361WebApp/assign.html', {'form': form})
 
 

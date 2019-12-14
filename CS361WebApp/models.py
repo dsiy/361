@@ -18,7 +18,7 @@ class CourseTime(models.Model):
     instructor = models.CharField(max_length=50, blank=True)
 
     def __str__(self):
-        return self.department + " " + self.number
+        return self.department + " " + self.number + "-" + self.section
 
 
 class CreatePriority(models.Model):
