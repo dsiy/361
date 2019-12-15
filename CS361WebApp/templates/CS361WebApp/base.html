@@ -34,6 +34,15 @@
         .sidebar-dark .nav-item .nav-link {
             color: white;
         }
+
+
+        .sidebar .nav-item .nav-link span {
+            font-size: 13pt;
+        }
+
+        .sidebar-dark .nav-item .nav-link i {
+            font-size: 13pt
+        }
     </style>
 
 </head>
@@ -55,23 +64,18 @@
         <!-- Divider -->
         <hr class="sidebar-divider">
 
-        <!-- Heading -->
-        <div class="sidebar-heading">
-            Interface
-        </div>
-
         {% if user.is_authenticated %}
             <li class="nav-item">
-                <a class="nav-link" href="{% url 'CS361WebApp-home' %}"><span>Home <i
+                <a class="nav-link" href="{% url 'CS361WebApp-home' %}"><span>Home  <i
                         class="fas fa-home"></i></span></a>
-                <a class="nav-link" href="{% url 'CS361WebApp-classList' %}"><span>Assign Priority <i
+                <a class="nav-link" href="{% url 'CS361WebApp-classList' %}"><span>Assign Priority  <i
                         class="fas fa-list"></i></span></a>
                 {% if user.is_staff %}
-                    <a class="nav-item nav-link" href="{% url 'register' %}"><span>Create Account <i
+                    <a class="nav-item nav-link" href="{% url 'register' %}"><span>Create Account  <i
                             class="fas fa-user-circle"></i></span></a>
-                    <a class="nav-item nav-link" href="{% url 'CS361WebApp-coursetime' %}"><span>Create Class <i
-                            class="fas fa-chalkboard"></i></i></span></a>
-                    <a class="nav-item nav-link" href="{% url 'CS361WebApp-assign' %}"><span>Assign User <i
+                    <a class="nav-item nav-link" href="{% url 'CS361WebApp-coursetime' %}"><span>Create Class  <i
+                            class="fas fa-chalkboard"></i></span></a>
+                    <a class="nav-item nav-link" href="{% url 'CS361WebApp-assign' %}"><span>Assign User  <i
                             class="far fa-user"></i></span></a>
                 {% endif %}
             </li>
