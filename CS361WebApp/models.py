@@ -2,6 +2,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
 from django.contrib.auth.models import User
+from django.db.models import CASCADE
 from CS361WebApp.validator import *
 
 # Create your models here.
@@ -22,11 +23,11 @@ class CourseTime(models.Model):
 
 
 class CreatePriority(models.Model):
-    classes = models.ForeignKey('CourseTime', on_delete=models.CASCADE, null=True)
+    classes = models.ForeignKey('CourseTime', on_delete=CASCADE, null=True)
     priority = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(9)])
 
     def __str__(self):
-        return self.classes.department + " " + self.classes.number + " " + self.priority
+        return self.classes.department + " " + self.classes.number + " " + self.classes.section + " " + self.priority
 
 
 class SavePriority(models.Model):
