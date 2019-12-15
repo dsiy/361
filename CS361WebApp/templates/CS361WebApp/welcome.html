@@ -1,26 +1,26 @@
 {% extends "CS361WebApp/base.html" %}
 {% block stylesheet %}
-{% load static %}
-<link rel="stylesheet" type="text/css" href="{% static 'TAManager/welcome.css' %}">
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'TAManager/welcome.css' %}">
 {% endblock stylesheet %}
 {% block content %}
-    <div class="row h-100 align-items-center">
-        <div class="col v-100 justify-content-center" style="text-align: center">
+    <div class="card">
+        <div class="card-body">
             <h1>Welcome to TA Scheduler!</h1>
             {% if user.is_authenticated %}
-            <p>Welcome to the TA Scheduling App, please click to Login!</p>
-            <a href="{% url 'login' %}">
-                <button class="btn btn-primary">Login</button>
-            </a>
+                <p>Welcome to the TA Scheduling App, please click to Login!</p>
+                <a href="{% url 'login' %}">
+                    <button class="btn btn-primary">Login</button>
+                </a>
             {% else %}
-            Please login.
-            <form method="POST" action="/">
-                {% csrf_token %}
-                <br>
-                <button type="submit" class="btn btn-success">Login</button>
-            </form>
+                Please login.
+                <form method="POST" action="/">
+                    {% csrf_token %}
+                    <br>
+                    <button type="submit" class="btn btn-success">Login</button>
+                </form>
             {% endif %}
-            </div>
         </div>
+    </div>
     </div>
 {% endblock content %}
