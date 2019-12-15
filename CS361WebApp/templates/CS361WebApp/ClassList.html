@@ -2,13 +2,17 @@
 {% load crispy_forms_tags %}
 {% load static %}
 {% block stylesheet %}
-<link rel="stylesheet" type="text/css" href="{% static 'TAManager/course_time.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'TAManager/course_time.css' %}">
 {% endblock stylesheet %}
 {% block content %}
-    <div class="card">
-    <div class="card-body">
-                        <h5 class="card-title">Class List</h5>
-                        {% for class in classes %}
+    <div class="card-deck">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Class List</h5>
+                <hr>
+                <ul class="list-group">
+                    {% for class in classes %}
+                        <li class="list-group-item">
                             {{ class.department }}
                             {{ class.number }}
                             {{ class.section }}
@@ -16,34 +20,44 @@
                             {{ class.start }}
                             {{ class.end }}
                             {{ class.instructor }}
-                            <br/>
-                        {% endfor %}
-                    <div style="display: table-cell;">
-                        <h5 class="card-title">Priority Class List</h5>
-                            {% for class in x %}
-                                {{class}}
-                                <br/>
-                            {% endfor %}
-                    </div>
-           <div class="content-section">
-                 <form method="POST">
+                        </li>
+                        <br/>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-body">
+                <div style="display: table-cell;">
+                    <h5 class="card-title">Priority Class List</h5>
+                    <hr>
+                    <ul class="list-group"></ul>
+                    {% for class in x %}
+                        <li class="list-group-item">
+                            {{ class }}
+                        </li>
+                        <br/>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-body">
+                <form method="POST">
                     {% csrf_token %}
                     <fieldset class="form-group">
-                        <legend class="border-bottom mb-4">Assign Priority</legend>
-                        <table>
-                            {{ form.as_table }}
-                        </table>
+                        <h5 class="card-title">Assign Priority</h5>
+                        <hr>
+                        <div class="card-text">
+                            {{ form }}
+                        </div>
                     </fieldset>
-                    <div class="from-group">
-                        <button class="btn btn-outline-info" type="submit">Submit</button>
+                    <div class="form-group">
+                        <button class="btn btn-primary" type="submit">Assign</button>
                     </div>
                 </form>
-                <div class="border-top pt-3">
-                    <small class="text-muted">
-        {#                Already Have An Account? <a class="ml-2" href="#">Sign In</a>#}
-                    </small>
-                </div>
-           </div>
+            </div>
+        </div>
     </div>
     </div>
 {% endblock content %}
