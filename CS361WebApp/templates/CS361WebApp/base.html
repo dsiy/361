@@ -108,9 +108,11 @@
                             </div>
                         </li>
 
+                        {% if user.is_authenticated %}
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-item nav-link" href="#" style="color: black">Welcome {{ user.username }}!</a>
                         </li>
+                        {% endif %}
 
                         <div class="topbar-divider d-none d-sm-block"></div>
 
