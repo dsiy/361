@@ -24,12 +24,6 @@
 
         <!-- Divider -->
         <hr class="sidebar-divider my-0">
-        <!-- Nav Item - Dashboard -->
-        <li class="nav-item active">
-            <a class="nav-link" href="dashboard.html">
-                <i class="fas fa-fw fa-tachometer-alt"></i>
-                <span>Dashboard</span></a>
-        </li>
 
         <!-- Divider -->
         <hr class="sidebar-divider">
@@ -39,14 +33,21 @@
             Interface
         </div>
 
+        {% if user.is_authenticated %}
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'CS361WebApp-home' %}"><span>Home <i
+                        class="fas fa-home"></i></span></a>
+                <a class="nav-link" href="{% url 'CS361WebApp-classList' %}"><span>Assign Priority <i
+                        class="fas fa-list"></i></span></a>
+                {% if user.is_staff %}
+                    <a class="nav-item nav-link" href="{% url 'register' %}"><span>Create Account <i class="fas fa-user-circle"></i></span></a>
+                    <a class="nav-item nav-link" href="{% url 'CS361WebApp-coursetime' %}"><span>Create Class <i class="fas fa-chalkboard"></i></i></span></a>
+                    <a class="nav-item nav-link" href="{% url 'CS361WebApp-assign' %}"><span>Assign User <i
+                            class="far fa-user"></i></span></a>
+                {% endif %}
+            </li>
+        {% endif %}
 
-        <li class="nav-item">
-            <a class="nav-link" href="{% url 'CS361WebApp-home' %}"><span>Home <i class="fas fa-home"></i></span></a>
-            <a class="nav-link" href="{% url 'CS361WebApp-classList' %}"><span>Assign Priority <i class="fas fa-list"></i></span></a>
-            <a class="nav-item nav-link" href="{% url 'register' %}"><span>Create Account</span></a>
-            <a class="nav-item nav-link" href="{% url 'CS361WebApp-coursetime' %}"><span>Create Class</span></a>
-            <a class="nav-item nav-link" href="{% url 'CS361WebApp-assign' %}"><span>Assign User <i class="far fa-user"></i></span></a>
-        </li>
     </ul>
     <!-- End of Sidebar -->
 
@@ -64,19 +65,6 @@
                     <i class="fa fa-bars"></i>
                 </button>
 
-                <!-- Topbar Search -->
-                <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-                    <div class="input-group">
-                        <input type="text" class="form-control bg-light border-0 small"
-                               placeholder="Search for..."
-                               aria-label="Search" aria-describedby="basic-addon2">
-                        <div class="input-group-append">
-                            <button class="btn btn-primary" type="button">
-                                <i class="fas fa-search fa-sm"></i>
-                            </button>
-                        </div>
-                    </div>
-                </form>
 
                 <!-- Topbar Navbar -->
                 <ul class="navbar-nav ml-auto">
@@ -99,7 +87,7 @@
                                                placeholder="Search for..." aria-label="Search"
                                                aria-describedby="basic-addon2">
                                         <div class="input-group-append">
-                                            <button class="btn btn-primary" type="button">
+                                            <button class="btn btn-warning" type="button">
                                                 <i class="fas fa-search fa-sm"></i>
                                             </button>
                                         </div>
@@ -109,9 +97,10 @@
                         </li>
 
                         {% if user.is_authenticated %}
-                        <li class="nav-item dropdown no-arrow">
-                            <a class="nav-item nav-link" href="#" style="color: black">Welcome {{ user.username }}!</a>
-                        </li>
+                            <li class="nav-item dropdown no-arrow">
+                                <a class="nav-item nav-link" href="#"
+                                   style="color: black">Welcome {{ user.username }}!</a>
+                            </li>
                         {% endif %}
 
                         <div class="topbar-divider d-none d-sm-block"></div>
