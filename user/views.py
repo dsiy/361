@@ -17,12 +17,8 @@ def register(request):
         if form.is_valid():
             form.save()
             username = form.cleaned_data.get('username')
-            role = form.cleaned_data.get('role')
-            if role == '1':
-                request.user.user_permissions.name = 'TA'
-                request.user.save()
-                yeet = request.user.user_permissions.name
-            messages.success(request, f'Account created for {username} with role {role}!')
+
+            messages.success(request, f'Account created for {username}!')
             return redirect('CS361WebApp-home')
 
     else:
