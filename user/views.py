@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from .forms import UserRegisterForm
 from django.contrib.auth.decorators import login_required, user_passes_test
+from django.contrib.auth import authenticate
 
 
 def admin_check(user):
@@ -16,7 +17,12 @@ def register(request):
         if form.is_valid():
             form.save()
             username = form.cleaned_data.get('username')
-            messages.success(request, f'Account created for {username}!')
+            role = form.cleaned_data.get('role')
+            if role == '1':
+                request.user.user_permissions.name = 'TA'
+                request.user.save()
+                yeet = request.user.user_permissions.name
+            messages.success(request, f'Account created for {username} with role {role}!')
             return redirect('CS361WebApp-home')
 
     else:
