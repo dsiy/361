@@ -1,4 +1,5 @@
 from django.test import TestCase
+import unittest
 from CS361WebApp.models import User, CourseTime, CreatePriority, SavePriority
 
 class TATestCase(TestCase):
@@ -212,5 +213,10 @@ class TATestCase(TestCase):
         sp2.myList.add(c3)
         self.assertEquals(SavePriority.objects.get(user=bryan).objects.get(classes=c395), c3)
 
+
 class InstructorTestCase(TestCase):
     pass
+
+
+if __name__ == '__main__':
+    unittest.main()

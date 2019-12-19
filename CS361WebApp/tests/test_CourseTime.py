@@ -1,4 +1,5 @@
 from django.test import TestCase
+import unittest
 from CS361WebApp.models import User, CourseTime, CourseTimeValidator
 
 
@@ -109,11 +110,6 @@ class CourseTimeTest(TestCase):
         boylandAdmin = Administrator.objects.get(email="boyland@uwm.edu")
         boylandAdmin.addClass(name="CS361")
 
-
-if __name__ == '__main__':
-    unittest.main()
-
-
     def test1_assign(self):
         c1 = CourseTime.objects.create(department="CS", number="351", section="603", instructor="Boyland")
         c1.update("Rock")
@@ -133,3 +129,7 @@ if __name__ == '__main__':
         c2 = CourseTime.objects.create(department="CS", number="351", section="603", instructor="Rock")
         c2.update("")
         self.assertEqual("")
+
+
+if __name__ == '__main__':
+    unittest.main()
