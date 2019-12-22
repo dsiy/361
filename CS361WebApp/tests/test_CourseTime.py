@@ -113,22 +113,20 @@ class CourseTimeTest(TestCase):
     def test1_assign(self):
         c1 = CourseTime.objects.create(department="CS", number="351", section="603", instructor="Boyland")
         c1.update("Rock")
-        self.assertEqual("Rock")
+        self.assertEqual(CourseTime.objects.get(number="351").instructor, "Rock")
 
     def test2_assign (self):
         c1 = CourseTime.objects.create(department="CS", number="351", section="603", instructor="Rock")
         c1.update("Boyland")
-        self.assertNotEqual("Rock")
+        self.assertNotEqual(CourseTime.objects.get(number="351").instructor, "Rock")
 
     def test3_assign(self):
         c2 = CourseTime.objects.create(department="CS", number="395", section="001", instructor="")
         c2.update("Cheng")
-        self.assertEqual("Cheng")
-
-    def test4_assign(self):
+        self.assertEqual(CourseTime.objects.get(number="395").instructor, "Cheng")
         c2 = CourseTime.objects.create(department="CS", number="351", section="603", instructor="Rock")
         c2.update("")
-        self.assertEqual("")
+        self.assertEqual(CourseTime.objects.get(number="351").instructor, "")
 
 
 if __name__ == '__main__':
