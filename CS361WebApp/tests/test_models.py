@@ -55,9 +55,9 @@ class TATestCase(TestCase):
         santha = User.objects.get(email="skravi@uwm.edu")
         list = ["CS395", "CS337", "CS361"]
         self.assertEqual(santha.addClass("CS361", 1), True)
-        self.assertEqual(santha.addClass("CS337", 1), True)
+        self.assertEqual(santha.addClass("CS337", 2), True)
         self.assertEqual(santha.addClass("CS395", 1), True)
-        self.assertEqual(santha.viewPriority(), list)
+        self.assertEqual(santha.viewPriority(), ["CS395", "CS37"])
 
     def test_TA_priority_overlap(self):
         User.objects.create(email="skravi@uwm.edu", password="imaTA32!")
@@ -66,7 +66,7 @@ class TATestCase(TestCase):
         self.assertEqual(santha.addClass("CS361", 1), True)
         self.assertEqual(santha.addClass("CS337", 1), True)
         self.assertEqual(santha.addClass("CS395", 1), True)
-        self.assertEqual(santha.viewPriority(), list)
+        self.assertEqual(santha.viewPriority(), "CS395")
 
     def test_TA_priority_remove1(self):
         User.objects.create(email="skravi@uwm.edu", password="imaTA32!")
@@ -112,9 +112,9 @@ class TATestCase(TestCase):
         self.assertEqual(santha.addClass("CS361", 1), True)
         self.assertEqual(santha.addClass("CS337", 1), True)
         self.assertEqual(santha.addClass("CS395", 1), True)
-        self.assertEqual(santha.changePriority("CS 395", 3), True)
-        self.assertEqual(santha.changePriority("CS 337", 2), True)
-        self.assertEqual(santha.changePriority("CS 361", 1), True)
+        self.assertEqual(santha.changePriority("CS395", 3), True)
+        self.assertEqual(santha.changePriority("CS337", 2), True)
+        self.assertEqual(santha.changePriority("CS361", 1), True)
         self.assertEqual(santha.viewPriority(), list)
 
     def test_TA_priority_change2(self):
@@ -124,10 +124,10 @@ class TATestCase(TestCase):
         self.assertEqual(santha.addClass("CS361", 1), True)
         self.assertEqual(santha.addClass("CS337", 1), True)
         self.assertEqual(santha.addClass("CS395", 1), True)
-        self.assertEqual(santha.changePriority("CS 361", 1), True)
-        self.assertEqual(santha.changePriority("CS 337", 1), True)
-        self.assertEqual(santha.changePriority("CS 395", 1), True)
-        self.assertEqual(santha.viewPriority(), list)
+        self.assertEqual(santha.changePriority("CS361", 1), False)
+        self.assertEqual(santha.changePriority("CS337", 1), False)
+        self.assertEqual(santha.changePriority("CS395", 1), True)
+        self.assertEqual(santha.viewPriority(), ["CS395"])
 
     def test_create_priority1(self):
         c361 = CourseTime.objects.create(department="CS", number="361", start="1100", end="1150", day="TTH", section="802", instructor="Rock")
@@ -198,7 +198,7 @@ class TATestCase(TestCase):
     def test_save_priority2(self):
         User.objects.create(email="skravi@uwm.edu", password="imaTA32!")
         santha = User.objects.get(email="skravi@uwm.edu")
-        User.objects.create(email="stoffleb@uwm.edu", passord="iamTA55!")
+        User.objects.create(email="stoffleb@uwm.edu", password="iamTA55!")
         bryan = User.objects.get(email="stoffelb@uwm.edu")
         c361 = CourseTime.objects.create(department="CS", number="361", start="1100", end="1150", day="TTH", section="802", instructor="Rock")
         c395 = CourseTime.objects.create(department="CS", number="395", start="1100", end="1150", day="TTH", section="802", instructor="Rock")
