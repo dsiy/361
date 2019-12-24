@@ -1,6 +1,7 @@
 from django.test import TestCase
 import unittest
 from CS361WebApp.models import User, CourseTime, CreatePriority, SavePriority
+from CS361WebApp.validator import validate_alpha, validate_numeric
 
 class TATestCase(TestCase):
 
@@ -212,6 +213,48 @@ class TATestCase(TestCase):
         sp2 = SavePriority.objects.create(user=bryan, myList=bList)
         sp2.myList.add(c3)
         self.assertEquals(SavePriority.objects.get(user=bryan).objects.get(classes=c395), c3)
+
+    # Tests for validating strings and numeric values
+
+    def test_acceptance_validator1(self):
+        # validate alphabetic
+        self.assertraises('data must not contain numbers or symbols', validate_alpha('2'))
+
+    def test_acceptance_validator2(self):
+        # validate alphabetic
+        self.assertraises('data must not contain numbers or symbols', validate_alpha('%'))
+
+    def test_acceptance_validator3(self):
+        # validate alphabetic
+        self.assertraises('data must not contain numbers or symbols', validate_alpha(3))
+
+    def test_acceptance_validator4(self):
+        # validate alphabetic
+        self.assertraises('data must not contain numbers or symbols', validate_alpha('hell0'))
+
+    def test_acceptance_validator5(self):
+        # validate alphabetic
+        self.assertraises('data must not contain numbers or symbols', validate_alpha())
+
+    def test_acceptance_validator6(self):
+        # validate alphabetic
+        self.assertraises('data must not contain numbers or symbols', validate_alpha(' '))
+
+    def test_acceptance_validator7(self):
+        # validate number
+        self.assertraises('data must be comprised only of numbers', validate_numeric(''))
+
+    def test_acceptance_validator8(self):
+        # validate number
+        self.assertraises('data must be comprised only of numbers', validate_numeric('678h'))
+
+    def test_acceptance_validator9(self):
+        # validate number
+        self.assertraises('data must be comprised only of numbers', validate_numeric('6%'))
+
+    def test_acceptance_validator10(self):
+        # validate number
+        self.assertraises('data must be comprised only of numbers', validate_numeric('  6'))
 
 
 class InstructorTestCase(TestCase):
