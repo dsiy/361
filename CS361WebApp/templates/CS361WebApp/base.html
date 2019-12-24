@@ -70,13 +70,16 @@
                         class="fas fa-home"></i></span></a>
                 <a class="nav-link" href="{% url 'CS361WebApp-classList' %}"><span>Assign Priority  <i
                         class="fas fa-list"></i></span></a>
+                <a class="nav-link" href="{% url 'CS361WebApp-updateinfo' %}"><span>Update Info  <i
+                        class="fas fa-list"></i></span></a>
+                <a class="nav-item nav-link" href="{% url 'CS361WebApp-assign' %}"><span>Assign User  <i
+                            class="far fa-user"></i></span></a>
                 {% if user.is_staff %}
                     <a class="nav-item nav-link" href="{% url 'register' %}"><span>Create Account  <i
                             class="fas fa-user-circle"></i></span></a>
                     <a class="nav-item nav-link" href="{% url 'CS361WebApp-coursetime' %}"><span>Create Class  <i
                             class="fas fa-chalkboard"></i></span></a>
-                    <a class="nav-item nav-link" href="{% url 'CS361WebApp-assign' %}"><span>Assign User  <i
-                            class="far fa-user"></i></span></a>
+
                 {% endif %}
             </li>
         {% endif %}

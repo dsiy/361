@@ -25,6 +25,26 @@
                     </div>
                 {% endfor %}
             </div>
+        <br>
+            <div>
+                <div class="card-title"><h5>Your Information:</h5></div>
+                <hr>
+                <div class="card-deck">
+                    {% for person in profile %}
+                     <div class="card">
+                        <div class="card-body">
+                            <div class="card-text">
+                               First Name: {{ person.firstname }}<br>
+                               Last Name: {{ person.lastname }}<br>
+                               Address: {{ person.address }}<br>
+                               Phone Number: {{ person.phone }}<br>
+                            </div>
+                        </div>
+                     </div>
+                    {% endfor %}
+                </div>
+
+            </div>
         </div>
     </div>
 {% endblock content %}

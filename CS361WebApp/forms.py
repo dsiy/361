@@ -1,6 +1,8 @@
 from django import forms
 from django.forms import ModelForm, ModelChoiceField, CharField
 from CS361WebApp import models
+from user.models import Profile
+from django.db.models import Q
 
 
 class CourseTimeForm(ModelForm):
@@ -11,7 +13,7 @@ class CourseTimeForm(ModelForm):
 
 class AssignUserForm(forms.Form):
     course = ModelChoiceField(queryset=models.CourseTime.objects.all())
-    instructor = CharField(max_length=50)
+    instructor = ModelChoiceField(queryset=Profile.objects.filter(Q(role=1) | Q(role=2)))
 
 
 class Priority(ModelForm):

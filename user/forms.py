@@ -1,8 +1,19 @@
 from django import forms
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, models
 from django.contrib.auth.forms import UserCreationForm
-from user.models import Profile
+from user import models
 from user.choices import *
+
+
+class UpdateInformationForm(forms.ModelForm):
+    class Meta:
+        model = models.Profile
+        fields = [
+            'firstname',
+            'lastname',
+            'address',
+            'phone',
+        ]
 
 
 class UserRegisterForm(UserCreationForm):
@@ -16,7 +27,7 @@ class UserRegisterForm(UserCreationForm):
             'email',
             'password1',
             'password2',
-            'role'
+            'role',
         ]
 
     def save(self, commit=True):
