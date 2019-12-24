@@ -12,8 +12,8 @@ from django.template.defaultfilters import slugify
 class CourseTime(models.Model):
     department = models.CharField(max_length=50, validators=[validate_alpha])
     number = models.CharField(max_length=50, validators=[validate_numeric])
-    start = models.CharField(max_length=50, validators=[validate_numeric])
-    end = models.CharField(max_length=50, validators=[validate_numeric])
+    start = models.TimeField(auto_now=False, auto_now_add=False,)
+    end = models.TimeField(auto_now=False, auto_now_add=False,)
     day = models.CharField(max_length=50, validators=[validate_alpha])
     section = models.CharField(max_length=50, validators=[validate_numeric])
     instructor = models.CharField(max_length=50, blank=True)

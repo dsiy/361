@@ -34,11 +34,6 @@ def coursetime(request):
             form.save()
             department = form.cleaned_data.get('department')
             number = form.cleaned_data.get('number')
-            start = form.cleaned_data.get('start')
-            end = form.cleaned_data.get('end')
-            day = form.cleaned_data.get('day')
-            section = form.cleaned_data.get('section')
-            instructor = form.cleaned_data.get('instructor')
 
             messages.success(request, f'Course created for {department} {number}!')
             return redirect('CS361WebApp-coursetime')

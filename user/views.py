@@ -1,4 +1,3 @@
-from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from .forms import UserRegisterForm, UpdateInformationForm
@@ -48,7 +47,6 @@ def register(request):
 
     else:
         form = UserRegisterForm()
-
     return render(request, 'user/register.html', {'form': form})
 
 # def login(request):
