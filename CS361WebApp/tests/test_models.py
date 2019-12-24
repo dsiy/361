@@ -2,6 +2,7 @@ from django.test import TestCase
 import unittest
 from CS361WebApp.models import User, CourseTime, CreatePriority, SavePriority
 from CS361WebApp.validator import validate_alpha, validate_numeric
+from django.core.exceptions import ValidationError
 
 class TATestCase(TestCase):
 
@@ -197,9 +198,9 @@ class TATestCase(TestCase):
         self.assertEquals(SavePriority.objects.get(user=santha), sp1)
 
     def test_save_priority2(self):
-        User.objects.create(email="skravi@uwm.edu", password="imaTA32!")
+        User.objects.create_user("santha", "skravi@uwm.edu", "imaTA32!")
         santha = User.objects.get(email="skravi@uwm.edu")
-        User.objects.create(email="stoffleb@uwm.edu", password="iamTA55!")
+        User.objects.create_user("bryan", "stoffleb@uwm.edu", "iamTA55!")
         bryan = User.objects.get(email="stoffelb@uwm.edu")
         c361 = CourseTime.objects.create(department="CS", number="361", start="1100", end="1150", day="TTH", section="802", instructor="Rock")
         c395 = CourseTime.objects.create(department="CS", number="395", start="1100", end="1150", day="TTH", section="802", instructor="Rock")
@@ -218,44 +219,63 @@ class TATestCase(TestCase):
 
     def test_acceptance_validator1(self):
         # validate alphabetic
-        self.assertraises('data must not contain numbers or symbols', validate_alpha('2'))
+        with self.assertRaises(ValidationError) as e:
+            validate_alpha('2')
+        self.assertEqual(e.exception.message, 'data must not contain numbers or symbols')
 
     def test_acceptance_validator2(self):
         # validate alphabetic
-        self.assertraises('data must not contain numbers or symbols', validate_alpha('%'))
+        with self.assertRaises(ValidationError) as e:
+            validate_alpha('%')
+        self.assertEqual(e.exception.message, 'data must not contain numbers or symbols')
 
     def test_acceptance_validator3(self):
         # validate alphabetic
-        self.assertraises('data must not contain numbers or symbols', validate_alpha(3))
+        with self.assertRaises(ValidationError) as e:
+            validate_alpha(3)
+        self.assertEqual(e.exception.message, 'data must not contain numbers or symbols')
 
     def test_acceptance_validator4(self):
         # validate alphabetic
-        self.assertraises('data must not contain numbers or symbols', validate_alpha('hell0'))
+        with self.assertRaises(ValidationError) as e:
+            validate_alpha('hello0')
+        self.assertEqual(e.exception.message, 'data must not contain numbers or symbols')
 
     def test_acceptance_validator5(self):
         # validate alphabetic
-        self.assertraises('data must not contain numbers or symbols', validate_alpha())
+        with self.assertRaises(ValidationError) as e:
+            validate_alpha()
+        self.assertEqual(e.exception.message, 'data must not contain numbers or symbols')
 
     def test_acceptance_validator6(self):
         # validate alphabetic
-        self.assertraises('data must not contain numbers or symbols', validate_alpha(' '))
+        with self.assertRaises(ValidationError) as e:
+            validate_alpha(' ')
+        self.assertEqual(e.exception.message, 'data must not contain numbers or symbols')
 
     def test_acceptance_validator7(self):
         # validate number
-        self.assertraises('data must be comprised only of numbers', validate_numeric(''))
+        with self.assertRaises(ValidationError) as e:
+            validate_numeric('')
+        self.assertEqual(e.exception.message, 'data must be comprised only of numbers')
 
     def test_acceptance_validator8(self):
         # validate number
-        self.assertraises('data must be comprised only of numbers', validate_numeric('678h'))
+        with self.assertRaises(ValidationError) as e:
+            validate_numeric('678h')
+        self.assertEqual(e.exception.message, 'data must be comprised only of numbers')
 
     def test_acceptance_validator9(self):
         # validate number
-        self.assertraises('data must be comprised only of numbers', validate_numeric('6%'))
+        with self.assertRaises(ValidationError) as e:
+            validate_numeric('6%')
+        self.assertEqual(e.exception.message, 'data must be comprised only of numbers')
 
     def test_acceptance_validator10(self):
         # validate number
-        self.assertraises('data must be comprised only of numbers', validate_numeric('  6'))
-
+        with self.assertRaises(ValidationError) as e:
+            validate_numeric(' 6')
+        self.assertEqual(e.exception.message, 'data must be comprised only of numbers')
 
 class InstructorTestCase(TestCase):
     pass
