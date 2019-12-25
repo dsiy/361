@@ -119,6 +119,39 @@ class AcceptanceTests(TestCase):
         )
         self.assertTrue(form.is_valid())
 
+    def test_admin_create_instructor_account_invalid1(self):
+        # Invalid form because the password is not long enough for requirements
+        username = "stoffel"
+        email = "stoffelb@uwm.edu"
+        passwrd1 = "bry"
+        passwrd2 = "bry"
+        form = UserRegisterForm(
+            data={"username": username, "email": email, "password1": passwrd1, "password2": passwrd2, "role": 2}
+        )
+        self.assertFalse(form.is_valid())
+
+    def test_admin_create_instructor_account_invalid2(self):
+        # Invalid form because the password is too similar to the username
+        username = "bryans"
+        email = "stoffelb@uwm.edu"
+        passwrd1 = "bryansucks"
+        passwrd2 = "bryansucks"
+        form = UserRegisterForm(
+            data={"username": username, "email": email, "password1": passwrd1, "password2": passwrd2, "role": 2}
+        )
+        self.assertFalse(form.is_valid())
+
+    def test_admin_create_instructor_account_invalid3(self):
+        # Invalid form because the password is too commonly used
+        username = "bryans"
+        email = "stoffelb@uwm.edu"
+        passwrd1 = "password"
+        passwrd2 = "password"
+        form = UserRegisterForm(
+            data={"username": username, "email": email, "password1": passwrd1, "password2": passwrd2, "role": 2}
+        )
+        self.assertFalse(form.is_valid())
+
     # As a TA I should be able to select from a list of classes and create a priority list of them
 
     def test_ta_assign_priority_list_valid(self):

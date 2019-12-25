@@ -197,61 +197,61 @@ class TATestCase(TestCase):
 
     # Tests for validating strings and numeric values
 
-    def test_acceptance_validator1(self):
+    def test_alpha_validator1(self):
         # validate alphabetic
         with self.assertRaises(ValidationError) as e:
             validate_alpha('2')
         self.assertEqual(e.exception.message, 'data must not contain numbers or symbols')
 
-    def test_acceptance_validator2(self):
+    def test_alpha_validator2(self):
         # validate alphabetic
         with self.assertRaises(ValidationError) as e:
             validate_alpha('%')
         self.assertEqual(e.exception.message, 'data must not contain numbers or symbols')
 
-    def test_acceptance_validator3(self):
+    def test_alpha_validator3(self):
         # validate alphabetic
         with self.assertRaises(ValidationError) as e:
             validate_alpha('3')
         self.assertEqual(e.exception.message, 'data must not contain numbers or symbols')
 
-    def test_acceptance_validator4(self):
+    def test_alpha_validator4(self):
         # validate alphabetic
         with self.assertRaises(ValidationError) as e:
             validate_alpha('hello0')
         self.assertEqual(e.exception.message, 'data must not contain numbers or symbols')
 
-    def test_acceptance_validator5(self):
+    def test_alpha_validator5(self):
         # validate alphabetic
         with self.assertRaises(ValidationError) as e:
             validate_alpha("Zer0")
         self.assertEqual(e.exception.message, 'data must not contain numbers or symbols')
 
-    def test_acceptance_validator6(self):
+    def test_alpha_validator6(self):
         # validate alphabetic
         with self.assertRaises(ValidationError) as e:
             validate_alpha(' ')
         self.assertEqual(e.exception.message, 'data must not contain numbers or symbols')
 
-    def test_acceptance_validator7(self):
+    def test_numeric_validator1(self):
         # validate number
         with self.assertRaises(ValidationError) as e:
             validate_numeric('')
         self.assertEqual(e.exception.message, 'data must be comprised only of numbers')
 
-    def test_acceptance_validator8(self):
+    def test_numeric_validator2(self):
         # validate number
         with self.assertRaises(ValidationError) as e:
             validate_numeric('678h')
         self.assertEqual(e.exception.message, 'data must be comprised only of numbers')
 
-    def test_acceptance_validator9(self):
+    def test_numeric_validator3(self):
         # validate number
         with self.assertRaises(ValidationError) as e:
             validate_numeric('6%')
         self.assertEqual(e.exception.message, 'data must be comprised only of numbers')
 
-    def test_acceptance_validator10(self):
+    def test_numeric_validator4(self):
         # validate number
         with self.assertRaises(ValidationError) as e:
             validate_numeric(' 6')
