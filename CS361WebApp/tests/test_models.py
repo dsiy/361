@@ -1,4 +1,3 @@
-from django.core.exceptions import ValidationError
 from django.test import TestCase
 import unittest
 from CS361WebApp.models import User, CourseTime, CreatePriority, SavePriority
@@ -195,7 +194,7 @@ class TATestCase(TestCase):
                                          section="802", instructor="Rock")
         c1 = CreatePriority.objects.create(classes=c361, priority="1")
         c2 = CreatePriority.objects.create(classes=c458, priority="3")
-        self.assertEquals(CreatePriority.objects.filter(priority="3").first(), c2)
+        self.assertEquals(CreatePriority.objects.get(priority="3"), c2)
 
     def test_create_priority4(self):
         User.objects.create(email="skravi@uwm.edu", password="imaTA32!")

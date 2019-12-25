@@ -1,11 +1,16 @@
 from django.contrib.auth import authenticate
 from django.test import TestCase
 from CS361WebApp.models import User, CourseTime
-from CS361WebApp.validator import validate_alpha, validate_numeric
+from django.db import models
 import unittest
+from user.choices import ROLE_CHOICES
+from user.forms import UserRegisterForm
 from ..forms import *
 from CS361WebApp.forms import *
 from django.contrib.auth.forms import AuthenticationForm
+from _datetime import datetime
+from django.core.exceptions import ValidationError
+from django.utils.translation import gettext_lazy as _
 from user.forms import UserRegisterForm
 
 
@@ -17,7 +22,8 @@ class AcceptanceTests(TestCase):
         # Form is valid because the login information entered is correct for an admin
         a = User.objects.create_superuser('admin', 'admin@uwm.edu', 'password')
         self.assertTrue(a.is_authenticated)
-        # form = AuthenticationForm(None, data={'username': a.username, 'password': a.password})
+        form = AuthenticationForm(None, data={'username': a.username, 'password': a.password})
+        self.assertTrue(form.is_valid())
 
     def test_admin_login_invalid(self):
         # Form is invalid because the login information entered is incorrect for an admin
@@ -29,7 +35,7 @@ class AcceptanceTests(TestCase):
 
     def test_ta_login_valid(self):
         # Form is valid because the login information entered is correct for a TA
-        u = User.objects.create_user('TA', 'ta@uwm.edu', 'password')
+        u = User.objects.create_user('TA', 'ta@uwm.edu', 'passable')
         form = AuthenticationForm(data={'username': u.username, 'password': u.password})
         self.assertTrue(form.is_valid())
 
@@ -70,8 +76,8 @@ class AcceptanceTests(TestCase):
         # Form is invalid because the end time is not the correct time format
         department = "CS"
         num = "361"
-        start = "11:00"
-        end = "1150"
+        start = "11 00"
+        end = "11 50"
         day = "TTH"
         section = "801"
         instructor = " "
@@ -86,17 +92,58 @@ class AcceptanceTests(TestCase):
         # Valid form entry by entering the correct parameters for each field
         username = "stoffel"
         email = "stoffelb@uwm.edu"
+        passwrd1 = "bryansucks"
+        passwrd2 = "bryansucks"
+        form = UserRegisterForm(
+            data={"username": username, "email": email, "password1": passwrd1, "password2": passwrd2, "role": 1}
+        )
         passwrd = "bryansucks"
         form = UserRegisterForm(data={"username": username, "password1": passwrd, "password2": passwrd})
         self.assertTrue(form.is_valid())
 
-    def test_admin_create_ta_account_invalid(self):
-        # Invalid form because the password confirmation does not match the first password entry
+
+    def test_admin_create_instructor_account_valid(self):
+        # Valid form entry by entering the correct parameters for each field
         username = "stoffel"
         email = "stoffelb@uwm.edu"
+        passwrd1 = "bryansucksalot"
+        passwrd2 = "bryansucksalot"
+        form = UserRegisterForm(
+            data={"username": username, "email": email, "password1": passwrd1, "password2": passwrd2, "role": 2}
+        )
+        self.assertTrue(form.is_valid())
+
+    def test_admin_create_instructor_account_invalid1(self):
+        # Invalid form because the password is not long enough for requirements
+        username = "stoffel"
+        email = "stoffelb@uwm.edu"
+        passwrd1 = "bry"
+        passwrd2 = "bry"
+        form = UserRegisterForm(
+            data={"username": username, "email": email, "password1": passwrd1, "password2": passwrd2, "role": 2}
+        )
+        self.assertFalse(form.is_valid())
+
+    def test_admin_create_instructor_account_invalid2(self):
+        # Invalid form because the password is too similar to the username
+        username = "bryans"
+        email = "stoffelb@uwm.edu"
         passwrd1 = "bryansucks"
-        passwrd2 = "bryanrocks"
-        form = UserRegisterForm(data={"username": username, "password1": passwrd1, "password2": passwrd2})
+        passwrd2 = "bryansucks"
+        form = UserRegisterForm(
+            data={"username": username, "email": email, "password1": passwrd1, "password2": passwrd2, "role": 2}
+        )
+        self.assertFalse(form.is_valid())
+
+    def test_admin_create_instructor_account_invalid3(self):
+        # Invalid form because the password is too commonly used
+        username = "bryans"
+        email = "stoffelb@uwm.edu"
+        passwrd1 = "password"
+        passwrd2 = "password"
+        form = UserRegisterForm(
+            data={"username": username, "email": email, "password1": passwrd1, "password2": passwrd2, "role": 2}
+        )
         self.assertFalse(form.is_valid())
 
     # As a TA I should be able to select from a list of classes and create a priority list of them
