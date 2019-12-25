@@ -125,7 +125,7 @@ class TATestCase(TestCase):
         self.assertEquals(CreatePriority.objects.get(classes=c361), c1)
 
     def test_create_priority2(self):
-        User.objects.create_user("santha", "skravi@uwm.edu", "imaTA32!")
+        santha = User.objects.create_user("santha", "skravi@uwm.edu", "imaTA32!")
         c361 = CourseTime.objects.create(department="CS", number="361", start="1100", end="1150", day="TTH", section="802", instructor="Rock")
         c395 = CourseTime.objects.create(department="CS", number="395", start="1100", end="1150", day="TTH", section="802", instructor="Rock")
         c458 = CourseTime.objects.create(department="CS", number="458", start="1100", end="1150", day="TTH", section="802", instructor="Rock")
@@ -133,7 +133,7 @@ class TATestCase(TestCase):
         self.assertEquals(CreatePriority.objects.get(classes=c395), None)
 
     def test_create_priority3(self):
-        User.objects.create_user("santha", "skravi@uwm.edu", "imaTA32!")
+        santha = User.objects.create_user("santha", "skravi@uwm.edu", "imaTA32!")
         c361 = CourseTime.objects.create(department="CS", number="361", start="1100", end="1150", day="TTH", section="802", instructor="Rock")
         c395 = CourseTime.objects.create(department="CS", number="395", start="1100", end="1150", day="TTH", section="802", instructor="Rock")
         c458 = CourseTime.objects.create(department="CS", number="458", start="1100", end="1150", day="TTH", section="802", instructor="Rock")
@@ -142,7 +142,7 @@ class TATestCase(TestCase):
         self.assertEquals(CreatePriority.objects.get(priority="3"), c2)
 
     def test_create_priority4(self):
-        User.objects.create_user("santha", "skravi@uwm.edu", "imaTA32!")
+        santha = User.objects.create_user("santha", "skravi@uwm.edu", "imaTA32!")
         c361 = CourseTime.objects.create(department="CS", number="361", start="1100", end="1150", day="TTH", section="802", instructor="Rock")
         c395 = CourseTime.objects.create(department="CS", number="395", start="1100", end="1150", day="TTH", section="802", instructor="Rock")
         c458 = CourseTime.objects.create(department="CS", number="458", start="1100", end="1150", day="TTH", section="802", instructor="Rock")
@@ -151,7 +151,7 @@ class TATestCase(TestCase):
         self.assertEquals(CreatePriority.objects.get(priority="1"), c2)
 
     def test_create_priority5(self):
-        User.objects.create_user("santha", "skravi@uwm.edu", "imaTA32!")
+        santha = User.objects.create_user("santha", "skravi@uwm.edu", "imaTA32!")
         c361 = CourseTime.objects.create(department="CS", number="361", start="1100", end="1150", day="TTH", section="802", instructor="Rock")
         c395 = CourseTime.objects.create(department="CS", number="395", start="1100", end="1150", day="TTH", section="802", instructor="Rock")
         c458 = CourseTime.objects.create(department="CS", number="458", start="1100", end="1150", day="TTH", section="802", instructor="Rock")
@@ -160,7 +160,7 @@ class TATestCase(TestCase):
         self.assertNotEquals(CreatePriority.objects.get(priority="1"), c1)
 
     def test_create_priority5(self):
-        User.objects.create_user("santha", "skravi@uwm.edu", "imaTA32!")
+        santha = User.objects.create_user("santha", "skravi@uwm.edu", "imaTA32!")
         c361 = CourseTime.objects.create(department="CS", number="361", start="1100", end="1150", day="TTH", section="802", instructor="Rock")
         c395 = CourseTime.objects.create(department="CS", number="395", start="1100", end="1150", day="TTH", section="802", instructor="Rock")
         c458 = CourseTime.objects.create(department="CS", number="458", start="1100", end="1150", day="TTH", section="802", instructor="Rock")
@@ -169,7 +169,7 @@ class TATestCase(TestCase):
         self.assertNotEquals(CreatePriority.objects.get(priority="one"), None)
 
     def test_save_priority1(self):
-        User.objects.create_user("santha", "skravi@uwm.edu", "imaTA32!")
+        santha = User.objects.create_user("santha", "skravi@uwm.edu", "imaTA32!")
         c361 = CourseTime.objects.create(department="CS", number="361", start="1100", end="1150", day="TTH", section="802", instructor="Rock")
         c395 = CourseTime.objects.create(department="CS", number="395", start="1100", end="1150", day="TTH", section="802", instructor="Rock")
         c458 = CourseTime.objects.create(department="CS", number="458", start="1100", end="1150", day="TTH", section="802", instructor="Rock")
@@ -180,8 +180,8 @@ class TATestCase(TestCase):
         self.assertEquals(SavePriority.objects.get(user=santha), sp1)
 
     def test_save_priority2(self):
-        User.objects.create_user("santha", "skravi@uwm.edu", "imaTA32!")
-        User.objects.create_user("bryan", "stoffleb@uwm.edu", "iamTA55!")
+        santha = User.objects.create_user("santha", "skravi@uwm.edu", "imaTA32!")
+        bryan = User.objects.create_user("bryan", "stoffleb@uwm.edu", "iamTA55!")
         c361 = CourseTime.objects.create(department="CS", number="361", start="1100", end="1150", day="TTH", section="802", instructor="Rock")
         c395 = CourseTime.objects.create(department="CS", number="395", start="1100", end="1150", day="TTH", section="802", instructor="Rock")
         c458 = CourseTime.objects.create(department="CS", number="458", start="1100", end="1150", day="TTH", section="802", instructor="Rock")
