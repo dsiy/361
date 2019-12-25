@@ -7,7 +7,6 @@ from django.core.exceptions import ValidationError
 class TATestCase(TestCase):
 
     def test_TA_priority_create1(self):
-        User.objects.create(email="skravi@uwm.edu", password="imaTA32!")
         santha = User.objects.get(email="skravi@uwm.edu")
         list = ["CS361", "CS337", "CS395"]
         self.assertEqual(santha.addClass("CS361", 1), True)
@@ -16,7 +15,6 @@ class TATestCase(TestCase):
         self.assertEqual(santha.viewPriority(), list)
 
     def test_TA_priority_create2(self):
-        User.objects.create(email="skravi@uwm.edu", password="imaTA32!")
         santha = User.objects.get(email="skravi@uwm.edu")
         list = ["cs361", "cS337", "CS395"]
         self.assertEqual(santha.addClass("cs361", 1), True)
@@ -25,7 +23,6 @@ class TATestCase(TestCase):
         self.assertEqual(santha.viewPriority(), list)
 
     def test_TA_priority_create3(self):
-        User.objects.create(email="skravi@uwm.edu", password="imaTA32!")
         santha = User.objects.get(email="skravi@uwm.edu")
         list = ["cs361", "CS337", "CS395"]
         self.assertEqual(santha.addClass("CS361", 1), True)
@@ -38,13 +35,11 @@ class TATestCase(TestCase):
         self.assertEqual(santha.viewPriority(), list)
 
     def test_TA_priority_view_empty(self):
-        User.objects.create(email="skravi@uwm.edu", password="imaTA32!")
         santha = User.objects.get(email="skravi@uwm.edu")
         list = []
         self.assertEqual(santha.viewPriority(), list)
 
     def test_TA_priority_view1(self):
-        User.objects.create(email="skravi@uwm.edu", password="imaTA32!")
         santha = User.objects.get(email="skravi@uwm.edu")
         list = ["cs361", "CS337", "CS395"]
         self.assertEqual(santha.addClass("CS361", 1), True)
@@ -53,7 +48,6 @@ class TATestCase(TestCase):
         self.assertEqual(santha.viewPriority(), list)
 
     def test_TA_priority_view2(self):
-        User.objects.create(email="skravi@uwm.edu", password="imaTA32!")
         santha = User.objects.get(email="skravi@uwm.edu")
         list = ["CS395", "CS337", "CS361"]
         self.assertEqual(santha.addClass("CS361", 1), True)
@@ -62,7 +56,6 @@ class TATestCase(TestCase):
         self.assertEqual(santha.viewPriority(), ["CS395", "CS37"])
 
     def test_TA_priority_overlap(self):
-        User.objects.create(email="skravi@uwm.edu", password="imaTA32!")
         santha = User.objects.get(email="skravi@uwm.edu")
         list = ["CS395", "CS337", "CS361"]
         self.assertEqual(santha.addClass("CS361", 1), True)
@@ -71,7 +64,6 @@ class TATestCase(TestCase):
         self.assertEqual(santha.viewPriority(), "CS395")
 
     def test_TA_priority_remove1(self):
-        User.objects.create(email="skravi@uwm.edu", password="imaTA32!")
         santha = User.objects.get(email="skravi@uwm.edu")
         list = []
         self.assertEqual(santha.addClass("CS361", 1), True)
@@ -83,7 +75,6 @@ class TATestCase(TestCase):
         self.assertEqual(santha.viewPriority(), list)
 
     def test_TA_priority_remove2(self):
-        User.objects.create(email="skravi@uwm.edu", password="imaTA32!")
         santha = User.objects.get(email="skravi@uwm.edu")
         list = []
         self.assertEqual(santha.addClass("CS361", 1), True)
@@ -96,7 +87,6 @@ class TATestCase(TestCase):
         self.assertEqual(santha.viewPriority(), list)
 
     def test_TA_priority_remove3(self):
-        User.objects.create(email="skravi@uwm.edu", password="imaTA32!")
         santha = User.objects.get(email="skravi@uwm.edu")
         list = ["CS395"]
         self.assertEqual(santha.addClass("CS361", 1), True)
@@ -108,7 +98,6 @@ class TATestCase(TestCase):
         self.assertEqual(santha.viewPriority(), list)
 
     def test_TA_priority_change1(self):
-        User.objects.create(email="skravi@uwm.edu", password="imaTA32!")
         santha = User.objects.get(email="skravi@uwm.edu")
         list = ["CS361", "CS395", "CS337"]
         self.assertEqual(santha.addClass("CS361", 1), True)
@@ -120,7 +109,6 @@ class TATestCase(TestCase):
         self.assertEqual(santha.viewPriority(), list)
 
     def test_TA_priority_change2(self):
-        User.objects.create(email="skravi@uwm.edu", password="imaTA32!")
         santha = User.objects.get(email="skravi@uwm.edu")
         list = ["CS395", "CS337", "CS361"]
         self.assertEqual(santha.addClass("CS361", 1), True)
@@ -137,8 +125,7 @@ class TATestCase(TestCase):
         self.assertEquals(CreatePriority.objects.get(classes=c361), c1)
 
     def test_create_priority2(self):
-        User.objects.create(email="skravi@uwm.edu", password="imaTA32!")
-        santha = User.objects.get(email="skravi@uwm.edu")
+        User.objects.create_user("santha", "skravi@uwm.edu", "imaTA32!")
         c361 = CourseTime.objects.create(department="CS", number="361", start="1100", end="1150", day="TTH", section="802", instructor="Rock")
         c395 = CourseTime.objects.create(department="CS", number="395", start="1100", end="1150", day="TTH", section="802", instructor="Rock")
         c458 = CourseTime.objects.create(department="CS", number="458", start="1100", end="1150", day="TTH", section="802", instructor="Rock")
@@ -146,8 +133,7 @@ class TATestCase(TestCase):
         self.assertEquals(CreatePriority.objects.get(classes=c395), None)
 
     def test_create_priority3(self):
-        User.objects.create(email="skravi@uwm.edu", password="imaTA32!")
-        santha = User.objects.get(email="skravi@uwm.edu")
+        User.objects.create_user("santha", "skravi@uwm.edu", "imaTA32!")
         c361 = CourseTime.objects.create(department="CS", number="361", start="1100", end="1150", day="TTH", section="802", instructor="Rock")
         c395 = CourseTime.objects.create(department="CS", number="395", start="1100", end="1150", day="TTH", section="802", instructor="Rock")
         c458 = CourseTime.objects.create(department="CS", number="458", start="1100", end="1150", day="TTH", section="802", instructor="Rock")
@@ -156,8 +142,7 @@ class TATestCase(TestCase):
         self.assertEquals(CreatePriority.objects.get(priority="3"), c2)
 
     def test_create_priority4(self):
-        User.objects.create(email="skravi@uwm.edu", password="imaTA32!")
-        santha = User.objects.get(email="skravi@uwm.edu")
+        User.objects.create_user("santha", "skravi@uwm.edu", "imaTA32!")
         c361 = CourseTime.objects.create(department="CS", number="361", start="1100", end="1150", day="TTH", section="802", instructor="Rock")
         c395 = CourseTime.objects.create(department="CS", number="395", start="1100", end="1150", day="TTH", section="802", instructor="Rock")
         c458 = CourseTime.objects.create(department="CS", number="458", start="1100", end="1150", day="TTH", section="802", instructor="Rock")
@@ -166,8 +151,7 @@ class TATestCase(TestCase):
         self.assertEquals(CreatePriority.objects.get(priority="1"), c2)
 
     def test_create_priority5(self):
-        User.objects.create(email="skravi@uwm.edu", password="imaTA32!")
-        santha = User.objects.get(email="skravi@uwm.edu")
+        User.objects.create_user("santha", "skravi@uwm.edu", "imaTA32!")
         c361 = CourseTime.objects.create(department="CS", number="361", start="1100", end="1150", day="TTH", section="802", instructor="Rock")
         c395 = CourseTime.objects.create(department="CS", number="395", start="1100", end="1150", day="TTH", section="802", instructor="Rock")
         c458 = CourseTime.objects.create(department="CS", number="458", start="1100", end="1150", day="TTH", section="802", instructor="Rock")
@@ -176,8 +160,7 @@ class TATestCase(TestCase):
         self.assertNotEquals(CreatePriority.objects.get(priority="1"), c1)
 
     def test_create_priority5(self):
-        User.objects.create(email="skravi@uwm.edu", password="imaTA32!")
-        santha = User.objects.get(email="skravi@uwm.edu")
+        User.objects.create_user("santha", "skravi@uwm.edu", "imaTA32!")
         c361 = CourseTime.objects.create(department="CS", number="361", start="1100", end="1150", day="TTH", section="802", instructor="Rock")
         c395 = CourseTime.objects.create(department="CS", number="395", start="1100", end="1150", day="TTH", section="802", instructor="Rock")
         c458 = CourseTime.objects.create(department="CS", number="458", start="1100", end="1150", day="TTH", section="802", instructor="Rock")
@@ -186,8 +169,7 @@ class TATestCase(TestCase):
         self.assertNotEquals(CreatePriority.objects.get(priority="one"), None)
 
     def test_save_priority1(self):
-        User.objects.create(email="skravi@uwm.edu", password="imaTA32!")
-        santha = User.objects.get(email="skravi@uwm.edu")
+        User.objects.create_user("santha", "skravi@uwm.edu", "imaTA32!")
         c361 = CourseTime.objects.create(department="CS", number="361", start="1100", end="1150", day="TTH", section="802", instructor="Rock")
         c395 = CourseTime.objects.create(department="CS", number="395", start="1100", end="1150", day="TTH", section="802", instructor="Rock")
         c458 = CourseTime.objects.create(department="CS", number="458", start="1100", end="1150", day="TTH", section="802", instructor="Rock")
@@ -199,9 +181,7 @@ class TATestCase(TestCase):
 
     def test_save_priority2(self):
         User.objects.create_user("santha", "skravi@uwm.edu", "imaTA32!")
-        santha = User.objects.get(email="skravi@uwm.edu")
         User.objects.create_user("bryan", "stoffleb@uwm.edu", "iamTA55!")
-        bryan = User.objects.get(email="stoffelb@uwm.edu")
         c361 = CourseTime.objects.create(department="CS", number="361", start="1100", end="1150", day="TTH", section="802", instructor="Rock")
         c395 = CourseTime.objects.create(department="CS", number="395", start="1100", end="1150", day="TTH", section="802", instructor="Rock")
         c458 = CourseTime.objects.create(department="CS", number="458", start="1100", end="1150", day="TTH", section="802", instructor="Rock")
@@ -232,7 +212,7 @@ class TATestCase(TestCase):
     def test_acceptance_validator3(self):
         # validate alphabetic
         with self.assertRaises(ValidationError) as e:
-            validate_alpha(3)
+            validate_alpha('3')
         self.assertEqual(e.exception.message, 'data must not contain numbers or symbols')
 
     def test_acceptance_validator4(self):
@@ -244,7 +224,7 @@ class TATestCase(TestCase):
     def test_acceptance_validator5(self):
         # validate alphabetic
         with self.assertRaises(ValidationError) as e:
-            validate_alpha()
+            validate_alpha("Zer0")
         self.assertEqual(e.exception.message, 'data must not contain numbers or symbols')
 
     def test_acceptance_validator6(self):
