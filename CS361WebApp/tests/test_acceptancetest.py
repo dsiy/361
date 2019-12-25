@@ -6,9 +6,8 @@ import unittest
 from ..forms import *
 from CS361WebApp.forms import *
 from django.contrib.auth.forms import AuthenticationForm
-from django.contrib import admin
-from django.core.exceptions import ValidationError
-from django.utils.translation import gettext_lazy as _
+from user.forms import UserRegisterForm
+
 
 class AcceptanceTests(TestCase):
 
@@ -30,7 +29,7 @@ class AcceptanceTests(TestCase):
 
     def test_ta_login_valid(self):
         # Form is valid because the login information entered is correct for a TA
-        u = User.objects.create_user('TA', 'ta@uwm.edu', 'password', 'TA')
+        u = User.objects.create_user('TA', 'ta@uwm.edu', 'password')
         form = AuthenticationForm(data={'username': u.username, 'password': u.password})
         self.assertTrue(form.is_valid())
 
@@ -88,7 +87,7 @@ class AcceptanceTests(TestCase):
         username = "stoffel"
         email = "stoffelb@uwm.edu"
         passwrd = "bryansucks"
-        form = forms.objects.UserRegisterForm(data={"username": username, "password1": passwrd, "password2": passwrd})
+        form = UserRegisterForm(data={"username": username, "password1": passwrd, "password2": passwrd})
         self.assertTrue(form.is_valid())
 
     def test_admin_create_ta_account_invalid(self):
@@ -97,7 +96,7 @@ class AcceptanceTests(TestCase):
         email = "stoffelb@uwm.edu"
         passwrd1 = "bryansucks"
         passwrd2 = "bryanrocks"
-        form = forms.objects.UserRegisterForm(data={"username": username, "password1": passwrd1, "password2": passwrd2})
+        form = UserRegisterForm(data={"username": username, "password1": passwrd1, "password2": passwrd2})
         self.assertFalse(form.is_valid())
 
     # As a TA I should be able to select from a list of classes and create a priority list of them
