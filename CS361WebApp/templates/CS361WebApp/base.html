@@ -160,6 +160,18 @@
     </div>
 </div>
 </body>
+<body>
+    <div class="container-fluid">
+        {% if messages %}
+            {%  for message in messages %}
+                <div class="alert alert-{{ message.tags }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+        {% block contentt %}{% endblock contentt %}
+    </div>
+</body>
 
 
 </html>

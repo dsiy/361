@@ -47,6 +47,7 @@ def coursetime(request):
 def assign(request):
     form = AssignUserForm(request.POST)
     person = Profile.objects.get(user=request.user)
+    completeform = 0
     if person.role == 1:
         return redirect('CS361WebApp-home')
     if form.is_valid():
@@ -57,11 +58,19 @@ def assign(request):
         class1.instructor = str(instructor)
         section = int(class1.section)
         if instructor.role == 1:
-            if section < 401:
+            if section <= 401:
                 class1.instructor = ''
+                completeform = 1
         elif instructor.role == 2:
             if section > 401:
                 class1.instructor = ''
+                completeform = 1
+        if completeform == 0:
+            courses = CourseTime.objects.filter(instructor=instructor)
+            for classes in courses:
+                if classes.day == class1.day:
+                    if classes.start.hour <= class1.start.hour <= classes.end.hour or classes.start.hour <= class1.end.hour <= classes.end.hour:
+                        return redirect('CS361WebApp-assign')
         class1.save()
         messages.success(request, f'{instructor} assigned to {class1}!')
         redirect('CS361WebApp-home')
@@ -76,6 +85,9 @@ def classlist(request):
     for yeet in profile:
         x = yeet.myList.order_by('priority')
     if request.method == 'POST':
+        person = Profile.objects.get(user=request.user)
+        if person.role != 1:
+            return redirect('CS361WebApp-home')
         form = Priority(request.POST)
 
         if form.is_valid():
@@ -92,7 +104,9 @@ def classlist(request):
 
             add = CreatePriority.objects.filter(classes=course).filter(priority=priority).first()
             test = SavePriority.objects.filter(user=name)
-
+            section = int(add.classes.section)
+            if section <= 401:
+                return redirect('CS361WebApp-classList')
             changed1 = 121111105110107
             changed2 = 121101101116
             for yeeet in test:
