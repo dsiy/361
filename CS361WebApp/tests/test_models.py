@@ -1,3 +1,4 @@
+from django.core.exceptions import ValidationError
 from django.test import TestCase
 import unittest
 from CS361WebApp.models import User, CourseTime, CreatePriority, SavePriority
